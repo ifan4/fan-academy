@@ -1,0 +1,40 @@
+export interface materi {
+    id:string
+    class_id?:string
+    description:string
+    title:string
+    file:string
+    video:string
+    created_at:Date
+}
+export interface class_type {
+    id:string
+    name:string
+    description:string
+    created_at:Date
+    materis?:materi[]
+}
+
+export interface quiz{
+    id: string,
+    question: string,
+    opsi_a: string,
+    opsi_b: string,
+    opsi_c: string,
+    opsi_d: string,
+    opsi_e: string,
+    answer: string,
+    materi: {
+        id: string,
+        title: string
+    }
+}
+
+export interface answer{
+    quiz_id: string,
+    answer: string
+} 
+
+export interface answers {
+    answers:answer[]
+}
