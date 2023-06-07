@@ -21,3 +21,5 @@ export const textTrunc = (text:string,length:number)=>{
         }
         return text
 }
+
+

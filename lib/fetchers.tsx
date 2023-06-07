@@ -1,3 +1,6 @@
+import { FetchRequest } from "@/types/interfaces";
+import { RequestOptions } from "https";
+import { NextConfig } from "next";
 
 export const fetcher = async (url:string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`)
@@ -23,6 +26,24 @@ export const fetcherWithToken = async (url:string,accessToken:string) => {
    
     return res.json()
 }
+
+export const fetchers = async (url:string,req:FetchRequest) => {
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,req)
+  console.log('res dari fetchers');
+  console.log(res);
+  
+  if (!res.ok) {
+    console.log(res);
+    throw new Error('An error occurred while fetching the data.')
+  }
+  
+
+  return res.json()
+}
+
+
+
 export const fetcherFile = async (url:string,accessToken:string) => {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,{

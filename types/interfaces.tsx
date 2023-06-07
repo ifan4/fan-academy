@@ -1,3 +1,5 @@
+import { HTTP_METHOD } from "next/dist/server/web/http"
+
 export interface materi {
     id:string
     class_id?:string
@@ -38,3 +40,26 @@ export interface answer{
 export interface answers {
     answers:answer[]
 }
+
+export interface userScores {
+    your_score: number,
+    correct: number,
+    wrong: number,
+    data: {
+        id: BigInt,
+        quiz_id: BigInt,
+        user_id: BigInt,
+        score: number,
+        answer: string,
+        created_at: Date,
+        updated_at: Date,
+        materi_id: BigInt
+    }
+}
+
+export interface FetchRequest {
+    method?: HTTP_METHOD;
+    body?: BodyInit;
+    headers?: HeadersInit;
+  }
+  

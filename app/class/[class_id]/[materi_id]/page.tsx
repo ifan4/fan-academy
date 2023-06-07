@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { Eye, Loader2 } from "lucide-react";
 import { useState } from "react";
 
+
 interface Props{
   class_id: string;
   materi_id:string;
@@ -21,9 +22,9 @@ export default function ClassDetail({ params }: { params: Props }) {
   
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false)
 
-  const {data:dataClass, error, isLoading} = useSWR(`/class/${class_id}?with_materis=true`,fetcher)
+  const {data:dataClass, error, isLoading} = useSWR(`/class/${class_id}?with_materis=true`,fetcher, {refreshInterval: 20000})
 
-  const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher)
+  const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher, {refreshInterval: 20000})
   
   const onDownload = async()=>{
     setIsFileLoading(true)

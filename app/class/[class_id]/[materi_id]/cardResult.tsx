@@ -1,12 +1,19 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { BellRing } from "lucide-react";
+import { userScores } from "@/types/interfaces";
+import { BellRing, Loader2 } from "lucide-react";
 import router from "next/router";
 import { title } from "process";
 
+interface Props{
+    userScores: userScores;
+    onTryAgain: ()=>void,
+    isLoading: boolean
+}
 
 
-export default function CardResult() {
+export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
     
     return(
         <Card className="text-center mt-2 lg:mt-5">
@@ -16,36 +23,36 @@ export default function CardResult() {
             <div className="grid lg:grid-cols-3 lg:gap-4 gap-2">
                 <CardContent>
                     <div className="flex items-center space-x-4 rounded-md border p-4">
-                        <div className="flex-1 space-y-1">
+                        <div className="flex-1 space-y-2">
                             <h4 className="text-xl font-medium leading-none">
                             Your Score
                             </h4>
-                            <p className="text-sm text-muted-foreground">
-                            0
+                            <p className="text-2xl font-bold">
+                            {userScores.your_score}
                             </p>
                         </div>
                     </div>
                 </CardContent>
                 <CardContent>
                     <div className=" flex items-center space-x-4 rounded-md border p-4">
-                        <div className="flex-1 space-y-1">
+                        <div className="flex-1 space-y-2">
                             <h4 className="text-xl font-medium leading-none">
                             Correct
                             </h4>
-                            <p className="text-sm text-muted-foreground">
-                            0
+                            <p className="text-2xl font-bold text-emerald-700">
+                            {userScores.correct}
                             </p>
                         </div>
                     </div>
                 </CardContent>
                 <CardContent>
                     <div className=" flex items-center space-x-4 rounded-md border p-4">
-                        <div className="flex-1 space-y-1">
+                        <div className="flex-1 space-y-2">
                             <h4 className="text-xl font-medium leading-none">
                             Wrong
                             </h4>
-                            <p className="text-sm text-muted-foreground">
-                            0
+                            <p className="text-2xl font-bold text-rose-500">
+                            {userScores.wrong}
                             </p>
                         </div>
                     </div>
@@ -53,7 +60,12 @@ export default function CardResult() {
             </div>
             <CardFooter className="flex justify-center">
                 <Button 
+                variant={'outline'}
+                onClick={onTryAgain}
                 >
+                    {
+                        isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                    }
                     Try Again
                 </Button>
             </CardFooter>

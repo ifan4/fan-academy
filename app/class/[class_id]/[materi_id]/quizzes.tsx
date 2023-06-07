@@ -1,5 +1,5 @@
 'use client'
-import { fetcherWithToken } from "@/lib/fetchers";
+import { fetcherWithToken, fetchers } from "@/lib/fetchers";
 import { useSession } from "next-auth/react";
 import useSWR from "swr"
 import {
@@ -21,15 +21,12 @@ import { Button } from "@/components/ui/button";
 import CardResult from "./cardResult";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-
-interface Props{
-    materi_id: string
-}
+import { Loader2 } from "lucide-react";
 
 
 const answerSchema = z.object({
     quiz_id: z.string(),
-    value: z.string().nonempty({message:'required'}),
+    value: z.string().nonempty({message:'required quiz'}),
     data: z.any()
 })
 const answersFormSchema = z.object({
@@ -39,11 +36,14 @@ const answersFormSchema = z.object({
 type AnswersFormValues = z.infer<typeof answersFormSchema>
 
 
-
-
-export default function Quizzes({materi_id}:Props) {
+export default function Quizzes({materi_id}:{materi_id:string}) {
     const {data:session} = useSession()
     const { toast } = useToast()
+    const [isThereUserScores, setIsThereUserScores] = useState<boolean>(false)
+useState<boolean>(true)
+    const [isLoadingSubmit, setIsLoadingSubmit] = useState<boolean>(false) 
+    const [isLoadingTryAgain, setIsLoadingTryAgain] = useState<boolean>(false) 
+
     const {data:quizzes,error,isLoading} = useSWR(
         // @ts-ignore
         [`/quizzes/materi/${materi_id}`,session?.user?.accessToken], 
@@ -51,8 +51,26 @@ export default function Quizzes({materi_id}:Props) {
         {suspense:true}
     )
 
-    const [answers,setAnswers] = useState<AnswersFormValues>()
-    
+    const {
+        data:userScores, 
+        isLoading:isUserScoresLoading, 
+        error:userScoresError,
+        mutate
+    } = useSWR(
+        
+         // @ts-ignore
+         [`/quizScores/user/materi/${materi_id}`,session?.user?.accessToken], 
+         ([url,accessToken])=> fetcherWithToken(url,accessToken),
+         {suspense:true}
+    )
+
+    useEffect(()=>{
+        if ( userScores?.data.length !== 0){
+            return setIsThereUserScores(true)
+        }
+        return setIsThereUserScores(false)
+    },[userScores])
+
     
 
     const form = useForm<AnswersFormValues>({
@@ -63,6 +81,7 @@ export default function Quizzes({materi_id}:Props) {
         name: "answers",
         control: form.control,
     })
+    
     useEffect(()=>{
         quizzes.data.map((quiz:quiz) => {
             return append({
@@ -73,28 +92,85 @@ export default function Quizzes({materi_id}:Props) {
             
         });
     },[append])
+
  
-    
-      
-    function onSubmit(data: AnswersFormValues) {
+
+    const onTryAgain = async() => {
+        setIsLoadingTryAgain(true)
+        try {
+            const res = await fetchers(`/quizScores/delete/materi/${materi_id}`,{
+                method: 'DELETE',
+                headers: {
+                    // @ts-ignore   
+                    Authorization: `Bearer ` + session?.user?.accessToken,
+                }
+            })
+            console.log(res);
+            
+            mutate()
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoadingTryAgain(false)
+        }
+    }
+
+    async function onSubmit(data: AnswersFormValues) {
+        setIsLoadingSubmit(true)
+        const newData = {
+            answers: data.answers.map((d)=> (
+                {
+                    quiz_id: parseInt(d.quiz_id),
+                    answer: d.value
+                }
+            ))
+        }
         
-        return toast({
-            title: "You submitted the following values:",
-            description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-            </pre>
-            ),
-        })
+        
+        try {
+            await fetchers(`/quizScores/addAllAnswers/${materi_id}`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    accept: 'application/json',
+                    // @ts-ignore   
+                    Authorization: `Bearer ` + session?.user?.accessToken,
+                },
+                body: JSON.stringify(newData)
+            })
+
+            mutate()
+            return toast({
+                title: "You submitted the following values:",
+                description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <p className="text-white">Quizzes Successfully Submitted!</p>
+                </pre>
+                ),
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        finally{
+            setIsLoadingSubmit(false)
+        }
+        
     }
     
 
     return(
         <>
-            <CardResult/>
+            {
+                isThereUserScores &&
+                <CardResult 
+                userScores={userScores} 
+                onTryAgain={onTryAgain}
+                isLoading={isLoadingTryAgain}
+                />
+            }
             <ol className="my-6 ml-6 list-decimal [&>li]:mt-2 font-bold text-2xl">
                 {
-                    quizzes && 
+                    quizzes && !isThereUserScores && 
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         {
@@ -116,15 +192,15 @@ export default function Quizzes({materi_id}:Props) {
                                             <OptionItem optionText={fieldx?.data?.opsi_a}/>
                                             <OptionItem optionText={fieldx?.data?.opsi_b}/>
                                             {
-                                                // quiz.opsi_c &&
+                                                fieldx?.data?.opsi_c &&
                                                 <OptionItem optionText={fieldx?.data?.opsi_c}/>
                                             }
                                             {
-                                                // quiz.opsi_d &&
+                                                fieldx?.data?.opsi_d &&
                                                 <OptionItem optionText={fieldx?.data?.opsi_d}/>
                                             }
                                             {
-                                                // quiz.opsi_e &&
+                                                fieldx?.data?.opsi_e &&
                                                 <OptionItem optionText={fieldx?.data?.opsi_e}/>
                                             }
                                             
@@ -138,7 +214,15 @@ export default function Quizzes({materi_id}:Props) {
                             ))
                         }
 
-                        <Button className="w-full" type="submit">Save My Answers</Button>
+                        <Button 
+                        className="w-full" 
+                        type="submit"
+                        >
+                            {
+                                isLoadingSubmit && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                            }
+                            Save My Answers
+                        </Button>
                     </form>
                 </Form>
                 }    
