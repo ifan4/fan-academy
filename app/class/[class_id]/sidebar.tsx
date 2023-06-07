@@ -40,8 +40,8 @@ export default function Sidebar({materis}:{materis:materi[]}) {
                     className={cn(
                         buttonVariants({ variant: "ghost" }),
                         pathname === `/class/${materi.class_id}/${materi.id}`
-                          ? "bg-muted hover:bg-muted dark:text-white text-slate-950"
-                          : "hover:bg-transparent hover:underline",
+                            ? "bg-muted hover:bg-muted dark:text-white text-slate-950"
+                            : "hover:bg-transparent hover:underline",
                         "text-sm py-8 w-full")}
                     onClick={()=>router.push(`/class/${materi.class_id}/${materi.id}`)}
                     >

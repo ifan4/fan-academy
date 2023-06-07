@@ -10,6 +10,7 @@ import Quizzes from "./quizzes";
 import { useSession } from "next-auth/react";
 import { Eye, Loader2 } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 
 interface Props{
@@ -71,7 +72,14 @@ export default function ClassDetail({ params }: { params: Props }) {
         </TabsContent>
         <TabsContent value="quiz">
           <div className="border lg:px-10">
-              <Quizzes materi_id={id}/>
+              {
+                session 
+                ? <Quizzes materi_id={id}/>
+                : <div className="flex lg:h-[400px] justify-center items-center">
+                  <h1 className="text-3xl">You have to <Link className="underline underline-offset-8 hover:text-teal-500" href={'/auth/login'}>login</Link> to access quiz</h1>
+                </div>
+              }
+              
           </div>
         </TabsContent>
       </Tabs>

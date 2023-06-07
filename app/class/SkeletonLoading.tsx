@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function Loading() {
     return (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
             {
                 skeletons.map((key:string)=>(
                     <Card key={key}>

@@ -32,52 +32,70 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
+import { useEffect, useState } from "react"
+import { MobileHeader } from "@/components/header/mobileHeader"
 
 
 const components: { title: string; href: string; description: string }[] = [
     {
-        title: "Alert Dialog",
+        title: "Frontend Development",
         href: "/docs/primitives/alert-dialog",
         description:
-        "A modal dialog that interrupts the user with important content and expects a response.",
+        "Creating the visual and interactive parts of websites using HTML, CSS, and JavaScript.",
     },
     {
-        title: "Hover Card",
+        title: "Backend Development",
         href: "/docs/primitives/hover-card",
         description:
-        "For sighted users to preview content available behind a link.",
+        "Building the behind-the-scenes functionality of websites or web applications using servers, databases, and application logic.",
     },
     {
-        title: "Progress",
+        title: "Full Stack Development",
         href: "/docs/primitives/progress",
         description:
-        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+        "Handling both frontend and backend development for complete web solutions.",
     },
     {
-        title: "Scroll-area",
+        title: "Programming Fundamental",
         href: "/docs/primitives/scroll-area",
-        description: "Visually or semantically separates content.",
+        description: "Covering essential programming concepts applicable to multiple languages.",
     },
     {
-        title: "Tabs",
+        title: "Desain",
+        href: "/docs/primitives/scroll-area",
+        description: "Focusing on visual design and user experience (UI/UX) principles for websites and digital products.",
+    },
+    {
+        title: "Others",
         href: "/docs/primitives/tabs",
         description:
-        "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    },
-    {
-        title: "Tooltip",
-        href: "/docs/primitives/tooltip",
-        description:
-        "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-    },
+        "Miscellaneous topics that don't fit into the other categories.",
+    }
 ]
 
 export default function Header() {
     const {data:session} = useSession()
+    const [windowSize, setWindowSize] = useState(getWindowSize());
+
+    useEffect(() => {
+    function handleWindowResize() {
+        setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+        window.removeEventListener('resize', handleWindowResize);
+    };
+    }, []);
+
+    if (windowSize.innerWidth <= 1024) {
+        return <MobileHeader/>
+    }
 
 
     return (
-        <div className="sm:container flex flex-col items-center">
+        <div className="lg:flex flex-col items-center hidden">
             <NavigationMenu className="mt-8 mb-2">
                 <NavigationMenuList>
                     <NavigationMenuItem>
@@ -140,7 +158,7 @@ export default function Header() {
                     
                         :   <NavigationMenuItem>
                                 <NavigationMenuLink>
-                                    <DropdownMenuDemo/>
+                                    <DropdownMenuUser displayName={session.user.email}/>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
                     }
@@ -179,14 +197,14 @@ ListItem.displayName = "ListItem"
 
 
 
-function DropdownMenuDemo() {
-    const {data:session} = useSession()
+export function DropdownMenuUser({displayName}:{displayName?:string |null }) {
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline">Sign In as &nbsp;
-                    <span className="text-sm underline decoration-pink-500 font-medium leading-none">{session?.user?.email}</span>
+                <Button variant="outline" className="w-full lg:w-auto">
+                    Sign In as &nbsp;
+                    <span className="text-sm underline decoration-pink-500 font-medium leading-none">{displayName}</span>
                 </Button>
             </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
@@ -210,5 +228,9 @@ function DropdownMenuDemo() {
                 </DropdownMenuContent>
             </DropdownMenu>
     )
-  }
-  
+}
+
+function getWindowSize() {
+    const {innerWidth, innerHeight} = window;
+    return {innerWidth, innerHeight};
+}

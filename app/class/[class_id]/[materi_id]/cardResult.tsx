@@ -59,8 +59,7 @@ export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
                 </CardContent>
             </div>
             <CardFooter className="flex justify-center">
-                <Button 
-                variant={'outline'}
+                <Button
                 onClick={onTryAgain}
                 >
                     {

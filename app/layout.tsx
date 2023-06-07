@@ -1,11 +1,11 @@
 'use client'
 import './globals.css'
-import { Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { useState } from 'react'
 import Head from 'next/head'
 
-const inter = Inter({ subsets: ['latin'] })
+const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Test Authentication',
@@ -23,9 +23,9 @@ export default function RootLayout({children,session}:Props) {
       <Head>
         <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
       </Head>
-      <body className={`${dark && 'dark'} ${inter.className }`}>
+      <body className={`${dark && 'dark'} ${jakarta_sans.className}`}>
         <SessionProvider session={session}>
-          <button onClick={()=>setDark(!dark)}>Click biar light mode</button>
+          {/* <button onClick={()=>setDark(!dark)}>Click biar light mode</button> */}
           {children}
         </SessionProvider>
       </body>

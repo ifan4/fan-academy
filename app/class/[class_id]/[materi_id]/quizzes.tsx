@@ -37,6 +37,7 @@ type AnswersFormValues = z.infer<typeof answersFormSchema>
 
 
 export default function Quizzes({materi_id}:{materi_id:string}) {
+    
     const {data:session} = useSession()
     const { toast } = useToast()
     const [isThereUserScores, setIsThereUserScores] = useState<boolean>(false)
@@ -57,11 +58,10 @@ useState<boolean>(true)
         error:userScoresError,
         mutate
     } = useSWR(
-        
          // @ts-ignore
-         [`/quizScores/user/materi/${materi_id}`,session?.user?.accessToken], 
-         ([url,accessToken])=> fetcherWithToken(url,accessToken),
-         {suspense:true}
+        [`/quizScores/user/materi/${materi_id}`,session?.user?.accessToken], 
+        ([url,accessToken])=> fetcherWithToken(url,accessToken),
+        {suspense:true}
     )
 
     useEffect(()=>{
@@ -93,8 +93,6 @@ useState<boolean>(true)
         });
     },[append])
 
- 
-
     const onTryAgain = async() => {
         setIsLoadingTryAgain(true)
         try {
@@ -125,8 +123,7 @@ useState<boolean>(true)
                 }
             ))
         }
-        
-        
+
         try {
             await fetchers(`/quizScores/addAllAnswers/${materi_id}`,{
                 method: 'POST',
@@ -156,6 +153,7 @@ useState<boolean>(true)
         }
         
     }
+    
     
 
     return(
