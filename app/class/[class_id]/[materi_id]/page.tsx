@@ -1,5 +1,5 @@
 'use client'
-import Sidebar from "../sidebar";
+import Sidebar, { MobileSideBar } from "../sidebar";
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { fetcher, fetcherFile } from "@/lib/fetchers";
@@ -51,7 +51,7 @@ export default function ClassDetail({ params }: { params: Props }) {
         </TabsList>
         <TabsContent value="materi" className="border p-3">
           <div className="flex justify-center mb-3">
-              <iframe className="lg:w-[800px] border-slate-800 border-8 rounded-xl" height="400" src={video} title="video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+              <iframe className="w-full lg:w-[800px] border-slate-800 border-8 rounded-xl" height="400" src={video} title="video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
           </div>
           <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 py-4">{title}</h3> 
           <p>
@@ -87,11 +87,14 @@ export default function ClassDetail({ params }: { params: Props }) {
   }
   
   return(
-      <div className="flex w-full">
-          <div className="xl:w-80 fixed h-screen">
+      <div className="flex flex-col lg:flex-row w-full">
+          <div className="xl:w-80 fixed h-screen hidden lg:block">
             <Sidebar materis={dataClass?.data.materis}/>
           </div>
-          <div className="ms-80 p-8 pt-0 w-full">
+          <div className="m-4 mb-0 block lg:hidden">
+              <MobileSideBar materis={dataClass?.data?.materis}/>
+            </div>
+          <div className="lg:ms-80 p-4 lg:p-8 pt-4 w-full">
             <Tabs_materi
             id={dataMateri?.data?.id}
             description={dataMateri?.data?.description} 

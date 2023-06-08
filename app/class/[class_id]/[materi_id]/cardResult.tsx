@@ -27,8 +27,9 @@ export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
                             <h4 className="text-xl font-medium leading-none">
                             Your Score
                             </h4>
-                            <p className="text-2xl font-bold">
-                            {userScores.your_score}
+                            <p className="flex justify-center items-center">
+                            <span className="text-2xl font-bold text-teal-500">{userScores.your_score}</span> &nbsp;/&nbsp;
+                            <span className="inline-block text-sm">100</span>
                             </p>
                         </div>
                     </div>

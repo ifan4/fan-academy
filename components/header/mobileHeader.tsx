@@ -80,12 +80,12 @@ export function MobileHeader() {
                         ? 
                         <>
                             <Link href={'/auth/login'}>
-                                <li className="p-1 rounded-xl list-none font-semibold text-lg m-1 mt-3 bg-teal-600 text-center" role="button">
+                                <li className="p-1 rounded-xl list-none font-semibold text-md m-1 mt-3 bg-teal-600 text-center" role="button">
                                     <span className="w-max">Login</span>
                                 </li>
                             </Link>
                             <Link href={'/auth/login'}>
-                                <li className="p-1 rounded-xl list-none font-semibold text-lg m-1 mt-3 outline outline-2 outline-teal-600 text-center" role="button">
+                                <li className="p-1 rounded-xl list-none font-semibold text-md m-1 mt-3 outline outline-2 outline-teal-600 text-center" role="button">
                                     <span className="w-max">Register</span>
                                 </li>
                             </Link>
@@ -114,13 +114,13 @@ const ListItem = ({title,icon,href}:component) => {
                     pathname === href
                     ? "rounded-xl bg-muted font-bold dark:text-white text-slate-950"
                     : "hover:bg-transparent hover:underline"
-                } p-2 list-none font-semibold text-lg grid grid-cols-4 gap-2 items-center m-1
+                } p-2 list-none font-semibold text-md grid grid-cols-4 gap-2 items-center m-1
             `}
             role="button"
             >
                 {
                     icon &&
-                    <span className="flex justify-center items-center rounded-lg bg-teal-600 p-1 w-6 h-6">
+                    <span className="flex justify-center items-center rounded-lg bg-teal-600 p-1 w-5 h-5">
                         {icon}
                     </span>
                 }

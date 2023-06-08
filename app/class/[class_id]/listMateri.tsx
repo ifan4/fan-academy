@@ -15,7 +15,7 @@ import { materi } from "@/types/interfaces"
 export default function ListMateri({materis}:{materis:materi[]}) {
     return (
       <Table>
-        <TableCaption>A list of your recent invoices.</TableCaption>
+        <TableCaption>A list of chapters.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="lg:w-[400px]">Title</TableHead>

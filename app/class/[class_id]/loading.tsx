@@ -6,7 +6,7 @@ export default function Loading() {
 
     return(
         <div className="flex w-full">
-            <div className="xl:w-80 fixed h-screen">
+            <div className="xl:w-80 fixed h-screen hidden lg:block">
                 <h3 className="text-xl font-semibold text-center pb-3">List Contents</h3>
                 <div className="p-4 h-3/4 rounded-md border dark:bg-zinc-950 space-y-3">
                     {
@@ -14,9 +14,9 @@ export default function Loading() {
                     }
                 </div>
             </div>
-            <div className="ms-80 p-8 pt-0 w-full text-center mt-16">
+            <div className="lg:ms-80 p-4 lg:p-8 pt-4 w-full text-center lg:mt-16 mt-3">
                 <div className="flex justify-center mb-8">
-                    <Skeleton className="lg:w-1/2 h-96"/>       
+                    <Skeleton className="h-[400px] w-full lg:w-1/2 lg:h-96"/>       
                 </div>
                 <div className="space-y-2">
                     <Skeleton className="h-4 w-3/12"/>

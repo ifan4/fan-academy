@@ -37,7 +37,7 @@ type AnswersFormValues = z.infer<typeof answersFormSchema>
 
 
 export default function Quizzes({materi_id}:{materi_id:string}) {
-    
+
     const {data:session} = useSession()
     const { toast } = useToast()
     const [isThereUserScores, setIsThereUserScores] = useState<boolean>(false)
@@ -166,11 +166,11 @@ useState<boolean>(true)
                 isLoading={isLoadingTryAgain}
                 />
             }
-            <ol className="my-6 ml-6 list-decimal [&>li]:mt-2 font-bold text-2xl">
                 {
                     quizzes && !isThereUserScores && 
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <ol className="px-8 list-decimal [&>li]:mt-2 font-bold">
                         {
                             fields.map((fieldx,index)=>(
                                 <FormField
@@ -181,7 +181,7 @@ useState<boolean>(true)
                                 render={({ field }) => (
                                     <li>
                                     <FormItem className="space-y-3 mb-8">
-                                    <FormLabel className="scroll-m-20 text-2xl font-semibold tracking-tight">{fieldx.data.question}</FormLabel>
+                                    <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{fieldx.data.question}</FormLabel>
                                     <FormControl>
                                         <RadioGroup
                                         onValueChange={field.onChange}
@@ -211,7 +211,7 @@ useState<boolean>(true)
                                 />
                             ))
                         }
-
+                        </ol>
                         <Button 
                         className="w-full" 
                         type="submit"
@@ -224,7 +224,6 @@ useState<boolean>(true)
                     </form>
                 </Form>
                 }    
-            </ol>
         </>
     )
 }
@@ -235,7 +234,7 @@ const OptionItem = ({optionText}:{optionText:string})=>{
             <FormControl>
                 <RadioGroupItem value={optionText}/>
             </FormControl>
-            <FormLabel className="font-normal text-xl rounded-lg p-4 dark:bg-slate-900 bg-white ring-1 ring-slate-900/5 shadow-lg hover:bg-sky-500 hover:ring-sky-500 w-full">
+            <FormLabel className="font-normal text-sm lg:text-xl rounded-lg p-4 dark:bg-slate-900 bg-white ring-1 ring-slate-900/5 shadow-lg hover:bg-sky-500 hover:ring-sky-500 w-full">
                 {optionText}
             </FormLabel>
         </FormItem>
