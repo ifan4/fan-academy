@@ -4,6 +4,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { useState } from 'react'
 import Head from 'next/head'
+import { Toaster } from "@/components/ui/toaster"
 
 const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
@@ -28,6 +29,7 @@ export default function RootLayout({children,session}:Props) {
           {/* <button onClick={()=>setDark(!dark)}>Click biar light mode</button> */}
           {children}
         </SessionProvider>
+        <Toaster/>
       </body>
       </html>
   )

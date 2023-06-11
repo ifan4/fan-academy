@@ -12,11 +12,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar"
-import { format } from "date-fns";
+import { format } from "date-fns";  
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
-import { fetcherWithToken } from "@/lib/fetchers";
-import { useEffect, useMemo } from "react";
+import { fetcherWithToken, fetchers } from "@/lib/fetchers";
+import { useEffect, useMemo, useState } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
     first_name: z.string().min(2, {
@@ -34,7 +36,9 @@ const formSchema = z.object({
 
 
 export default function ProfileForm(){
+    const { toast } = useToast()
     const { data:session } = useSession()
+    const [ isUpdating,setIsUpdating] = useState<boolean>(false)
     const { data, isLoading, error } = useSWR(
         //@ts-ignore
         ['/profile/me', session?.user?.accessToken],
@@ -45,11 +49,6 @@ export default function ProfileForm(){
         resolver: zodResolver(formSchema),
     })
     useMemo(()=>{
-
-        console.log('date format');
-        
-        console.log(new Date(data?.data.date_of_birth) );
-        
         form.setValue('first_name',data?.data.first_name)
         form.setValue('last_name',data?.data.last_name)
         form.setValue('nisn',data?.data.nisn)
@@ -57,11 +56,48 @@ export default function ProfileForm(){
         form.setValue('date_of_birth',new Date(data?.data.date_of_birth))
     },[data])
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setIsUpdating(true)
+        try {
+            const updatess = await fetchers(`/profile/update`,{
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": 'application/json', 
+                    'Accept': 'application/json',
+                    //@ts-ignore
+                    Authorization: 'Bearer ' + session?.user?.accessToken,
+                },
+                body: JSON.stringify({
+                    first_name: values.first_name,
+                    last_name: values.last_name,
+                    nisn: values.nisn,
+                    email: values.email,
+                    date_of_birth: values.date_of_birth.toDateString(),
+                })
+            })
+            console.log(form.getValues('date_of_birth').toUTCString()); 
+            
+            return toast({
+                title: 'Success',
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <p className="text-white">Profile Successfully updated!</p>
+                    </pre>
+                )
+            })
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsUpdating(false)
+        }
     }
+    
+    
+
+
+    
+
+
     if (isLoading) return <div>Loading...</div>
 
     return(
@@ -163,7 +199,14 @@ export default function ProfileForm(){
           )}
         />
 
-                <Button type="submit">Update account</Button>
+                <Button 
+                type="submit"
+                >
+                    {
+                        isUpdating && <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
+                    }
+                    Update account
+                </Button>
                 </form>
             </Form>
         </>

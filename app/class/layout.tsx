@@ -2,7 +2,7 @@
 import Header from "@/app/header";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
-import { Toaster } from "@/components/ui/toaster"
+
 
 
 
@@ -16,7 +16,6 @@ export default function Layout({children}:Props) {
         <>
             <Header/>
             {children}
-            <Toaster/>
         </>
     )
 }
