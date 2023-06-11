@@ -17,7 +17,7 @@ export default function Sidebar({materis}:{materis:materi[]}) {
 
     return(
         <>
-            <h3 className="text-xl font-semibold text-center pb-3">List Contents</h3>
+            <h3 className="text-xl font-semibold text-center pb-3">List Chapters</h3>
             <ScrollArea className="h-3/4 rounded-md border dark:bg-zinc-950">
                 <div className="p-4">
                     <Fragment>
@@ -68,7 +68,7 @@ export const MobileSideBar = ({materis}:{materis:materi[]}) => {
                         <PanelLeftOpen className="mr-2"/> Open Chapters
                     </Button>
                 </SheetTrigger>
-                <SheetContent position="left" size="sm">
+                <SheetContent position="left" size="lg">
                     <Sidebar materis={materis}/>
                 </SheetContent>
         </Sheet>

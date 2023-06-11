@@ -29,7 +29,7 @@ export default function ClassDetail({ params }: { params: Props }) {
             <div className="m-4 mb-0 block lg:hidden">
               <MobileSideBar materis={data?.data?.materis}/>
             </div>
-            <div className="lg:ms-80 p-2 lg:p-8 pt-4 w-full m-4 border lg:border-none">
+            <div className="lg:ms-80 p-2 lg:p-8 pt-4 w-auto lg:w-full m-4 border lg:border-none">
                 {
                     data && 
                     <>

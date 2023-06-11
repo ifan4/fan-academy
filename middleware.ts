@@ -1,16 +1,29 @@
 // export { default } from "next-auth/middleware";
 import { withAuth } from "next-auth/middleware";
 import { NextRequest, NextResponse } from "next/server";
+import { getToken } from 'next-auth/jwt';
 
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
 
     function middleware(req:any) {
     
+    // console.log("token: ", req.nextauth.token.role.id);
     
-    console.log("token: ", req.nextauth.token.role.id);
-
+    // if (req.nextUrl.pathname.startsWith("/auth")){
+    //     if (!req.nextauth.token){
+    //         return NextResponse.next();
+    //     }
+    //     return NextResponse.redirect(
+    //         new URL("/", req.url)
+    //     );
+    // }
     if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role?.id !== 1){
+        return NextResponse.redirect(
+            new URL("/auth/login?message=You Are Not Authorized!", req.url)
+        );
+    }
+    else if (req.nextUrl.pathname.startsWith("/dashboard") && !req.nextauth){
         return NextResponse.redirect(
             new URL("/auth/login?message=You Are Not Authorized!", req.url)
         );
@@ -32,5 +45,22 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/myData/:path*"],
+  matcher: ["/admin/:path*", "/myData/:path*", "/dashboard/:path*","/auth/:path*"],
 };
+
+export async function middleware(req: NextRequest) {
+    const token = await getToken({ req });
+    const isAuthenticated = !!token;
+    console.log('middleware 2');
+    console.log(isAuthenticated);
+    
+    if (req.nextUrl.pathname.startsWith('/auth')) 
+    {
+        if (isAuthenticated){
+            return NextResponse.redirect(new URL('/', req.url));
+        }
+        else {
+            return NextResponse.next()
+        }
+    }
+  }

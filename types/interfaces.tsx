@@ -61,5 +61,11 @@ export interface FetchRequest {
     method?: HTTP_METHOD;
     body?: BodyInit;
     headers?: HeadersInit;
-  }
-  
+}
+
+export interface quizzesSummary{
+    avarage_score: number,
+    total_quizzes: number,
+    total_correct: number,
+    total_wrong: number
+}

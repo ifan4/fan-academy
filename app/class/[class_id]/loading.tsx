@@ -22,7 +22,7 @@ export default function Loading() {
                     <Skeleton className="h-4 w-3/12"/>
                     <hr />
                     <Skeleton className="h-4 w-full"/>
-                    <Skeleton className="h-4 w-full"/>
+                     
                     <Skeleton className="h-4 w-3/4"/>
                 </div>
             </div>

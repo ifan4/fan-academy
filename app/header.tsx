@@ -34,40 +34,41 @@ import {
   } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import { MobileHeader } from "@/components/header/mobileHeader"
+import { usePathname } from "next/navigation"
 
 
 const components: { title: string; href: string; description: string }[] = [
     {
         title: "Frontend Development",
-        href: "/docs/primitives/alert-dialog",
+        href: '#',
         description:
         "Creating the visual and interactive parts of websites using HTML, CSS, and JavaScript.",
     },
     {
         title: "Backend Development",
-        href: "/docs/primitives/hover-card",
+        href: "#",
         description:
         "Building the behind-the-scenes functionality of websites or web applications using servers, databases, and application logic.",
     },
     {
         title: "Full Stack Development",
-        href: "/docs/primitives/progress",
+        href: "#",
         description:
         "Handling both frontend and backend development for complete web solutions.",
     },
     {
         title: "Programming Fundamental",
-        href: "/docs/primitives/scroll-area",
+        href: "#",
         description: "Covering essential programming concepts applicable to multiple languages.",
     },
     {
         title: "Desain",
-        href: "/docs/primitives/scroll-area",
+        href: "#",
         description: "Focusing on visual design and user experience (UI/UX) principles for websites and digital products.",
     },
     {
         title: "Others",
-        href: "/docs/primitives/tabs",
+        href: "#",
         description:
         "Miscellaneous topics that don't fit into the other categories.",
     }
@@ -75,6 +76,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default function Header() {
     const {data:session} = useSession()
+    const pathname = usePathname()
     const [windowSize, setWindowSize] = useState(getWindowSize());
 
     useEffect(() => {
@@ -100,7 +102,8 @@ export default function Header() {
                 <NavigationMenuList>
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} text-gray-900`}>
+                            <NavigationMenuLink 
+                            className={`${navigationMenuTriggerStyle()} text-gray-900`}>
                                 <Image 
                                 src={'/logo-no-bg.png'}
                                 width={150}
@@ -111,14 +114,23 @@ export default function Header() {
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                            <NavigationMenuLink 
+                            className={`
+                            ${navigationMenuTriggerStyle()}
+                            ${pathname == '/' && 'bg-accent text-accent-foreground'}
+                            `}
+                            >
                                 Home
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
                 <NavigationMenuItem>
                     <Link href="/class" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                        <NavigationMenuLink 
+                        className={`
+                            ${navigationMenuTriggerStyle()}
+                            ${pathname?.startsWith('/class') && 'bg-accent text-accent-foreground'}
+                        `}>
                         Class
                         </NavigationMenuLink>
                     </Link>
@@ -141,7 +153,9 @@ export default function Header() {
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            <NavigationMenuLink 
+                            className={navigationMenuTriggerStyle()}
+                            >
                                 About Us
                             </NavigationMenuLink>
                         </Link>
@@ -211,14 +225,18 @@ export function DropdownMenuUser({displayName}:{displayName?:string |null }) {
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                            <User className="mr-2 h-4 w-4" />
-                            <span>Profile</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <CreditCard className="mr-2 h-4 w-4" />
-                            <span>My Dashboard</span>
-                        </DropdownMenuItem>
+                        <Link href={'/dashboard/profile'}>
+                            <DropdownMenuItem>
+                                    <User className="mr-2 h-4 w-4" />
+                                    <span>Profile</span>
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link href={'/dashboard'}>
+                            <DropdownMenuItem>
+                                <CreditCard className="mr-2 h-4 w-4" />
+                                <span>My Dashboard</span>
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem role="button" onClick={()=>signOut()}>

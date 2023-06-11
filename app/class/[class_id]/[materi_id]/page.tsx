@@ -75,7 +75,7 @@ export default function ClassDetail({ params }: { params: Props }) {
               {
                 session 
                 ? <Quizzes materi_id={id}/>
-                : <div className="flex lg:h-[400px] justify-center items-center">
+                : <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
                   <h1 className="text-3xl">You have to <Link className="underline underline-offset-8 hover:text-teal-500" href={'/auth/login'}>login</Link> to access quiz</h1>
                 </div>
               }
