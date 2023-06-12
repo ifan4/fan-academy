@@ -1,7 +1,7 @@
 'use client'
 import CardComponent from './card'
 import useSWR from 'swr';
-import Loading from './SkeletonLoading';
+import Loading from './loading';
 import { useEffect } from 'react';
 import { fetcher } from '@/lib/fetchers';
 import { class_type } from '@/types/interfaces';
@@ -28,7 +28,7 @@ export default function ClassPage() {
                     <Loading/>
                 )
             }
-            <div className="grid lg:grid-cols-4 gap-9 lg:gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-9 lg:gap-4">
                 {
                     data && data?.data?.map((d:class_type,key:string)=>(
                         <CardComponent key={d.id} id={d.id} title={d.name} desc={d.description}/>

@@ -6,6 +6,8 @@ import { getToken } from 'next-auth/jwt';
 export default withAuth(
   // `withAuth` augments your `Request` with the user's token.
 
+
+
     function middleware(req:any) {
     
     // console.log("token: ", req.nextauth.token.role.id);
@@ -45,22 +47,22 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/myData/:path*", "/dashboard/:path*","/auth/:path*"],
+  matcher: ["/admin/:path*", "/myData/:path*", "/dashboard/:path*"],
 };
 
-export async function middleware(req: NextRequest) {
-    const token = await getToken({ req });
-    const isAuthenticated = !!token;
-    console.log('middleware 2');
-    console.log(isAuthenticated);
+// export async function middleware(req: NextRequest) {
+//     const token = await getToken({ req });
+//     const isAuthenticated = !!token;
+//     console.log('middleware 2');
+//     console.log(isAuthenticated);
     
-    if (req.nextUrl.pathname.startsWith('/auth')) 
-    {
-        if (isAuthenticated){
-            return NextResponse.redirect(new URL('/', req.url));
-        }
-        else {
-            return NextResponse.next()
-        }
-    }
-  }
+//     if (req.nextUrl.pathname.startsWith('/auth')) 
+//     {
+//         if (isAuthenticated){
+//             return NextResponse.redirect(new URL('/', req.url));
+//         }
+//         else {
+//             return NextResponse.next()
+//         }
+//     }
+// }

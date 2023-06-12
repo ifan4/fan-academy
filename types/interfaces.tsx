@@ -69,3 +69,8 @@ export interface quizzesSummary{
     total_correct: number,
     total_wrong: number
 }
+
+export interface error{
+    message: string,
+    status: string | number
+}

@@ -18,6 +18,8 @@ export const fetcherWithToken = async (url:string,accessToken:string) => {
         Authorization: 'Bearer ' + accessToken
       }
     })
+    console.log(res);
+    
     if (!res.ok) {
       throw new Error('An error occurred while fetching the data.')
     }
@@ -29,12 +31,19 @@ export const fetchers = async (url:string,req:FetchRequest) => {
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,req)
   
-  if (!res.ok) {
-    console.log(res);
-    
-    throw new Error('An error occurred while fetching the data.')
+  const jsonData = await res.json()
+  if (!res.ok){
+    throw new Error(
+      jsonData.message ? jsonData.message
+      : 'An error occurred while fetching the data.'
+    )
   }
-  return res.json()
+  
+  return jsonData
+    
+  
+  
+
 }
 
 

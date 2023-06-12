@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
-import { signIn } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
@@ -14,16 +15,24 @@ interface IProps {
   }
 
 export default function Login({ searchParams }: IProps) {
+    const { data:session } = useSession()
     const router = useRouter();
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [status,setStatus] = useState<'success' | 'failed'>()
     const [errorMessage, setErrorMessage] = useState<null | string>()
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(()=>{
         const message:any= searchParams?.message
         setErrorMessage(message)
+        const status:any= searchParams?.status
+        setStatus(status)
     },[searchParams?.message])
+
+    useEffect(()=> {
+        if (session)router.push('/')
+    },[session])
 
     
 
@@ -54,7 +63,7 @@ export default function Login({ searchParams }: IProps) {
     }
     
 
-    return(
+    if (!session) return(
         <form 
         className="sm:container lg:w-1/4 p-8 mt-7"
         onSubmit={onSubmitHandler}
@@ -66,7 +75,7 @@ export default function Login({ searchParams }: IProps) {
                 <CardContent className="space-y-2">
                     {
                         errorMessage 
-                        &&  <Alert variant="destructive">
+                        &&  <Alert variant={status == 'success'? 'default' : 'destructive'}>
                                 <AlertCircle className="h-4 w-4" />
                                 <AlertDescription>
                                 { errorMessage }
@@ -92,7 +101,7 @@ export default function Login({ searchParams }: IProps) {
                         />
                     </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="block">
                     <Button className="w-full">
                     {
                         !loading 
@@ -100,6 +109,17 @@ export default function Login({ searchParams }: IProps) {
                         : 'Loading..'
                     }
                     </Button>
+                    <div className="mt-8 text-center">
+                        New to Fan-Academy?
+                        <span 
+                        className="ml-2 text-teal-600 hover:text-teal-800"
+                        role="button"
+                        >
+                            <Link href={'/auth/register'}>
+                                Sign Up
+                            </Link>
+                        </span> 
+                    </div>
                 </CardFooter>
             </Card>
         </form>

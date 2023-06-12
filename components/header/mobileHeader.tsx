@@ -84,7 +84,7 @@ export function MobileHeader() {
                                     <span className="w-max">Login</span>
                                 </li>
                             </Link>
-                            <Link href={'/auth/login'}>
+                            <Link href={'/auth/register'}>
                                 <li className="p-1 rounded-xl list-none font-semibold text-md m-1 mt-3 outline outline-2 outline-teal-600 text-center" role="button">
                                     <span className="w-max">Register</span>
                                 </li>

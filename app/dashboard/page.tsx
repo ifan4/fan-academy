@@ -29,7 +29,7 @@ const Card = ({title,value}:{title:string,value:number}) => {
     return(
         <div className="border py-8">
             <h4>{title}</h4>
-            <div className="text-2xl font-semibold">{value}</div>
+            <div className="text-2xl font-semibold">{value ? value : '0'}</div>
         </div>
     )
 }

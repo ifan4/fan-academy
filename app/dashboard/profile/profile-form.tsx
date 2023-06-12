@@ -27,7 +27,7 @@ const formSchema = z.object({
     last_name: z.string().optional(),
     nisn: z.string().min(10, {
         message: 'Invalid NISN'
-    }),
+    }).optional(),
     email: z.string().email(),
     date_of_birth: z.date({
         required_error: "A date of birth is required.",
@@ -50,8 +50,8 @@ export default function ProfileForm(){
     })
     useMemo(()=>{
         form.setValue('first_name',data?.data.first_name)
-        form.setValue('last_name',data?.data.last_name)
-        form.setValue('nisn',data?.data.nisn)
+        form.setValue('last_name',data?.data.last_name?data?.data.last_name:'')
+        form.setValue('nisn',data?.data.nisn?data?.data.nisn:'')
         form.setValue('email',data?.data.email)
         form.setValue('date_of_birth',new Date(data?.data.date_of_birth))
     },[data])
@@ -75,7 +75,6 @@ export default function ProfileForm(){
                     date_of_birth: values.date_of_birth.toDateString(),
                 })
             })
-            console.log(form.getValues('date_of_birth').toUTCString()); 
             
             return toast({
                 title: 'Success',
