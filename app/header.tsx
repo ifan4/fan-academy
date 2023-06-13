@@ -19,8 +19,11 @@ import {
     CreditCard,
     LogOut,
     User,
+    Moon,
+    Sun
   } from "lucide-react"
-  
+  import { Icons } from "@/components/icons"
+  import { useDispatch } from "react-redux";
   import { Button } from "@/components/ui/button"
   import {
     DropdownMenu,
@@ -31,11 +34,17 @@ import {
     DropdownMenuSeparator,
     DropdownMenuShortcut,
     DropdownMenuTrigger,
+    DropdownMenuCheckboxItem,
   } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import { MobileHeader } from "@/components/header/mobileHeader"
 import { usePathname } from "next/navigation"
-
+import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
+import { changeToDark, changeToLight } from "@/globalState/themeReducer"
+// import { useAppSelector } from "@/globalState/store"
+import useDeviceSize from "@/lib/helper"
+import { useAppSelector } from "@/globalState/store"
+type Checked = DropdownMenuCheckboxItemProps["checked"]
 
 const components: { title: string; href: string; description: string }[] = [
     {
@@ -76,23 +85,15 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default function Header() {
     const {data:session} = useSession()
+    const dispatch = useDispatch()
+    const themeName = useAppSelector(state => state.theme.name) 
     const pathname = usePathname()
-    const [windowSize, setWindowSize] = useState(getWindowSize());
+    const [width, height] = useDeviceSize();
 
-    useEffect(() => {
-    function handleWindowResize() {
-        setWindowSize(getWindowSize());
-    }
-
-    window.addEventListener('resize', handleWindowResize);
-
-    return () => {
-        window.removeEventListener('resize', handleWindowResize);
-    };
-    }, []);
-
-    if (windowSize.innerWidth <= 1024) {
-        return <MobileHeader/>
+    if (width !== undefined ) {
+        if (width <= 1024){
+            return <MobileHeader/>
+        }
     }
 
 
@@ -177,6 +178,40 @@ export default function Header() {
                             </NavigationMenuItem>
                     }
                 </NavigationMenuList>
+                <NavigationMenuList className="flex items-center border-l border-slate-200 space-x-4 ml-6 pl-6 dark:border-slate-800">
+                    <NavigationMenuItem>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Moon 
+                                className="opacity-60 hover:opacity-100" role="button"
+                                />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem
+                                className={`${themeName === 'dark' && 'text-teal-500'}`}
+                                onClick={()=>dispatch(changeToDark())}
+                                >
+                                    <Moon className="mr-2 h-4 w-4"/>
+                                    <span>Dark</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                className={`${themeName === 'light' && 'text-teal-500'}`}
+                                onClick={()=>dispatch(changeToLight())}
+                                >
+                                    <Sun className="mr-2 h-4 w-4"/>
+                                    <span>Light</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem>
+                            <a href="https://github.com/ifan4/fan-academy" target="_blank">
+                                <Icons.gitHub
+                                className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
+                                />
+                            </a>
+                    </NavigationMenuItem>
+                </NavigationMenuList>
             </NavigationMenu>
         </div>
     )
@@ -246,9 +281,4 @@ export function DropdownMenuUser({displayName}:{displayName?:string |null }) {
                 </DropdownMenuContent>
             </DropdownMenu>
     )
-}
-
-function getWindowSize() {
-    const {innerWidth, innerHeight} = window;
-    return {innerWidth, innerHeight};
 }

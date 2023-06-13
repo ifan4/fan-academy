@@ -1,7 +1,7 @@
 'use client'
 import CardComponent from './card'
 import useSWR from 'swr';
-import Loading from './loading';
+import Loading from './skeletonLoading';
 import { useEffect } from 'react';
 import { fetcher } from '@/lib/fetchers';
 import { class_type } from '@/types/interfaces';

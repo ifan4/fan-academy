@@ -10,7 +10,7 @@ export default function Loading() {
                 <h3 className="text-xl font-semibold text-center pb-3">List Contents</h3>
                 <div className="p-4 h-3/4 rounded-md border dark:bg-zinc-950 space-y-3">
                     {
-                        skeletons.map((key:string)=><Skeleton className="text-sm py-8 w-full h-16"/>)
+                        skeletons.map((key:string)=><Skeleton key={key} className="text-sm py-8 w-full h-16"/>)
                     }
                 </div>
             </div>

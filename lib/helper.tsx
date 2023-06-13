@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export const convertDate = (dateInit: string)=>{
 	if (dateInit.includes('T')){
 		const newDate = new Date(dateInit);
@@ -22,4 +24,26 @@ export const textTrunc = (text:string,length:number)=>{
         return text
 }
 
+const useDeviceSize = () => {
+	const [width, setWidth] = useState<number | undefined>()
+	const [height, setHeight] = useState<number | undefined>()
+  
+	const handleWindowResize = () => {
+	  setWidth(window.innerWidth);
+	  setHeight(window.innerHeight);
+	}
+  
+	useEffect(() => {
+	  // component is mounted and window is available
+	  handleWindowResize();
+	  window.addEventListener('resize', handleWindowResize);
+	  // unsubscribe from the event on component unmount
+	  return () => window.removeEventListener('resize', handleWindowResize);
+	}, []);
+  
+	return [width, height]
+  
+  }
+  
+  export default useDeviceSize 
 

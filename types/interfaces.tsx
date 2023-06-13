@@ -74,3 +74,7 @@ export interface error{
     message: string,
     status: string | number
 }
+
+export interface theme {
+    name: 'dark' | 'light'
+} 

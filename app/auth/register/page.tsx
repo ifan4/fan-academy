@@ -12,7 +12,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { boolean, z } from "zod"
+import { z } from "zod"
 
 const registerScheme = z.object({
     first_name: z.string().min(2),
@@ -32,7 +32,7 @@ const registerScheme = z.object({
 
 type RegisterValues = z.infer<typeof registerScheme>
 
-export default function register() {
+export default function Register() {
     const { data:session } = useSession()
     const router = useRouter()
     const form = useForm<RegisterValues>({
