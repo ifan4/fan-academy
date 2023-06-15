@@ -2,10 +2,9 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import themeReducer from "./themeReducer";
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { applyMiddleware, Store } from 'redux'
 import { persistStore, persistReducer, Persistor, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
-import thunk from "redux-thunk";
+
 const createNoopStorage = () => {
     return {
         getItem(_key: any) {

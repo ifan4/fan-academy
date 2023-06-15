@@ -81,7 +81,7 @@ export default function Register() {
     if (!session) return(
         <Form {...form}>
             <form
-            className="sm:container lg:w-1/4 p-8 mt-7 border rounded-xl space-y-2 mx-5"
+            className="lg:w-1/3 p-8 mt-7 lg:mx-auto border rounded-xl space-y-2 mx-5 bg-white dark:bg-transparent"
             onSubmit={form.handleSubmit(onSubmit)}
             >
                 <h3 className="text-center text-xl">Register</h3>

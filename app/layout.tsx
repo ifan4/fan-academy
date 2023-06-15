@@ -7,8 +7,7 @@ import Head from 'next/head'
 import { Toaster } from "@/components/ui/toaster"
 // import { persistor } from '@/globalState/store'
 import Provider from '@/globalState/Provider'
-import { changeToDark, changeToLight } from '@/globalState/themeReducer'
-import { PersistGate } from 'redux-persist/integration/react'
+import Image from 'next/image'
 import { store, useAppSelector } from '@/globalState/store'
 import { persistStore } from 'redux-persist'
 const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
@@ -29,12 +28,18 @@ export default function RootLayout({children,session}:Props) {
     const themeG:'light'|'dark' = useAppSelector(state=>state.theme.name)
     setTheme(themeG)
 
-    
 
     return(
       <body className={`${theme} ${jakarta_sans.className} transition ease-linear delay-75`}>
+        <Image 
+        className='dark:opacity-25 absolute -z-10 transition ease-in-out delay-500' 
+        src={'/rainbow-bg.png'} 
+        fill={true} 
+        alt={''}/>
         <SessionProvider session={session}>
-          {children}
+          <div className='relative z-10 sm:container'>
+            {children}
+          </div>
         </SessionProvider>
         <Toaster/>
     </body>

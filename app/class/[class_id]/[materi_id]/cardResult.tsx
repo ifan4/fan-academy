@@ -16,7 +16,7 @@ interface Props{
 export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
     
     return(
-        <Card className="text-center mt-2 lg:mt-5">
+        <Card className="text-center my-2 lg:my-5">
             <CardHeader>
                 <CardTitle className="text-3xl">Result</CardTitle>
             </CardHeader>

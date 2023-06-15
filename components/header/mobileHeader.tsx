@@ -9,9 +9,10 @@ import { LucideMenu, Home, School2, User2,ArrowDownWideNarrow } from 'lucide-rea
 import { ReactNode } from "react"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
-import { DropdownMenuUser } from "@/app/header"
+import { DropdownMenuUser, DropdownTheme } from "@/app/header"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
+import { Icons } from "../icons"
 
 interface component{
     title: string; 
@@ -93,6 +94,14 @@ export function MobileHeader() {
                         :
                         <DropdownMenuUser displayName={session.user?.name}/>
                     }
+                    <div className="flex justify-evenly mt-7">
+                        <DropdownTheme/>
+                        <a href="https://github.com/ifan4/fan-academy" target="_blank">
+                            <Icons.gitHub
+                            className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
+                            />
+                        </a>
+                    </div>
                     
 
                 </SheetContent>

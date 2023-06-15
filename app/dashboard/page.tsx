@@ -63,7 +63,7 @@ const NewCard =  (
                     </span>
             </CardHeader>
                 <CardContent>
-                <div className="text-2xl font-bold">{value}</div>
+                <div className="text-2xl font-bold">{value || 0}</div>
             </CardContent>
         </Card>
     )

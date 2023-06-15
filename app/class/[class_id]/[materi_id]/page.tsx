@@ -88,7 +88,7 @@ export default function ClassDetail({ params }: { params: Props }) {
   
   return(
       <div className="flex flex-col lg:flex-row w-full">
-          <div className="xl:w-80 fixed h-screen hidden lg:block">
+          <div className="lg:w-80 fixed h-screen hidden lg:block">
             <Sidebar materis={dataClass?.data.materis}/>
           </div>
           <div className="m-4 mb-0 block lg:hidden">

@@ -24,7 +24,7 @@ export default function DashboardLayout({children}:Props) {
     
 
     return(
-        <div className="sm:container">
+        <div className="">
             <Header/>
             <div className="space-y-6 p-10 pb-16 block border lg:min-h-[600px]">
                 <div className="space-y-0.5">

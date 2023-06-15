@@ -10,7 +10,9 @@ export default function Layout({children}:Props) {
     return(
         <>
         <Header/>
-        {children}
+        <div className="lg:flex justify-center items-center">
+            {children}
+        </div>
         </>
     )
 }

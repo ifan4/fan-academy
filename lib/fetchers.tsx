@@ -4,7 +4,6 @@ import { NextConfig } from "next";
 
 export const fetcher = async (url:string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`)
-    console.log(res);
     if (!res.ok) {
       throw new Error('An error occurred while fetching the data.')
     }
@@ -18,8 +17,6 @@ export const fetcherWithToken = async (url:string,accessToken:string) => {
         Authorization: 'Bearer ' + accessToken
       }
     })
-    console.log(res);
-    
     if (!res.ok) {
       throw new Error('An error occurred while fetching the data.')
     }

@@ -85,8 +85,6 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default function Header() {
     const {data:session} = useSession()
-    const dispatch = useDispatch()
-    const themeName = useAppSelector(state => state.theme.name) 
     const pathname = usePathname()
     const [width, height] = useDeviceSize();
 
@@ -98,27 +96,23 @@ export default function Header() {
 
 
     return (
-        <div className="lg:flex flex-col items-center hidden">
-            <NavigationMenu className="mt-8 mb-2">
+        <div className="lg:flex py-8 items-center justify-between hidden px-3">
+            <Link href="/" legacyBehavior passHref>
+                <Image 
+                src={'/logo-no-bg.png'}
+                width={150}
+                height={150} alt={"Fan Academy"}                        
+                />
+            </Link>
+            <NavigationMenu>
                 <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink 
-                            className={`${navigationMenuTriggerStyle()} text-gray-900`}>
-                                <Image 
-                                src={'/logo-no-bg.png'}
-                                width={150}
-                                height={150} alt={"Fan Academy"}                        
-                                />
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
+                    
                     <NavigationMenuItem>
                         <Link href="/" legacyBehavior passHref>
                             <NavigationMenuLink 
                             className={`
                             ${navigationMenuTriggerStyle()}
-                            ${pathname == '/' && 'bg-accent text-accent-foreground'}
+                            ${pathname == '/' && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
                             `}
                             >
                                 Home
@@ -130,7 +124,7 @@ export default function Header() {
                         <NavigationMenuLink 
                         className={`
                             ${navigationMenuTriggerStyle()}
-                            ${pathname?.startsWith('/class') && 'bg-accent text-accent-foreground'}
+                            ${pathname?.startsWith('/class') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
                         `}>
                         Class
                         </NavigationMenuLink>
@@ -139,7 +133,7 @@ export default function Header() {
                 <NavigationMenuItem>
                     <NavigationMenuTrigger>Category</NavigationMenuTrigger>
                         <NavigationMenuContent>
-                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                             {components.map((component) => (
                                 <ListItem
                                 key={component.title}
@@ -161,58 +155,30 @@ export default function Header() {
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
-                    {
-                        !session?.user 
-                        ?   <NavigationMenuItem>
-                                <Link href="/auth/login" legacyBehavior passHref>
-                                    <NavigationMenuLink className={`bg-slate-800 text-teal-50 dark:bg-teal-500 ${navigationMenuTriggerStyle()}`}>
-                                        Login
-                                    </NavigationMenuLink>
-                                </Link>
-                            </NavigationMenuItem>
-                    
-                        :   <NavigationMenuItem>
-                                <NavigationMenuLink>
-                                    <DropdownMenuUser displayName={session.user.email}/>
-                                </NavigationMenuLink>
-                            </NavigationMenuItem>
-                    }
-                </NavigationMenuList>
-                <NavigationMenuList className="flex items-center border-l border-slate-200 space-x-4 ml-6 pl-6 dark:border-slate-800">
-                    <NavigationMenuItem>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Moon 
-                                className="opacity-60 hover:opacity-100" role="button"
-                                />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem
-                                className={`${themeName === 'dark' && 'text-teal-500'}`}
-                                onClick={()=>dispatch(changeToDark())}
-                                >
-                                    <Moon className="mr-2 h-4 w-4"/>
-                                    <span>Dark</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                className={`${themeName === 'light' && 'text-teal-500'}`}
-                                onClick={()=>dispatch(changeToLight())}
-                                >
-                                    <Sun className="mr-2 h-4 w-4"/>
-                                    <span>Light</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                            <a href="https://github.com/ifan4/fan-academy" target="_blank">
-                                <Icons.gitHub
-                                className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
-                                />
-                            </a>
-                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
+            <div className="flex">
+                {
+                    !session?.user 
+                    ?   <Button>
+                            <Link href="/auth/login" legacyBehavior passHref>
+                                    Login
+                            </Link>
+                        </Button>
+                
+                    : <DropdownMenuUser displayName={session.user.email}/>
+                }
+                <div className="flex items-center border-l border-slate-600 space-x-4 ml-6 pl-6 dark:border-slate-400">
+                
+                        <DropdownTheme/>
+        
+                        <a href="https://github.com/ifan4/fan-academy" target="_blank">
+                            <Icons.gitHub
+                            className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
+                            />
+                        </a>
+                </div>
+            </div>
         </div>
     )
 }
@@ -222,8 +188,6 @@ const ListItem = React.forwardRef<
     React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
     return (
-        <li>
-        <NavigationMenuLink asChild>
             <a
             ref={ref}
             className={cn(
@@ -237,8 +201,6 @@ const ListItem = React.forwardRef<
                 {children}
             </p>
             </a>
-        </NavigationMenuLink>
-        </li>
     )
 })
 ListItem.displayName = "ListItem"
@@ -280,5 +242,42 @@ export function DropdownMenuUser({displayName}:{displayName?:string |null }) {
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
+    )
+}
+
+
+export const DropdownTheme = () => {
+    const dispatch = useDispatch()
+    const themeName = useAppSelector(state => state.theme.name) 
+    return(
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                {
+                    themeName == 'light'
+                    ? <Sun 
+                    className="opacity-60 hover:opacity-100" role="button"
+                    />
+                    : <Moon 
+                    className="opacity-60 hover:opacity-100" role="button"
+                    />
+                }
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+                <DropdownMenuItem
+                className={`${themeName === 'dark' && 'text-teal-500'}`}
+                onClick={()=>dispatch(changeToDark())}
+                >
+                    <Moon className="mr-2 h-4 w-4"/>
+                    <span>Dark</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                className={`${themeName === 'light' && 'text-teal-500'}`}
+                onClick={()=>dispatch(changeToLight())}
+                >
+                    <Sun className="mr-2 h-4 w-4"/>
+                    <span>Light</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     )
 }

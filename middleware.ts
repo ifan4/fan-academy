@@ -12,14 +12,7 @@ export default withAuth(
     
     // console.log("token: ", req.nextauth.token.role.id);
     
-    // if (req.nextUrl.pathname.startsWith("/auth")){
-    //     if (!req.nextauth.token){
-    //         return NextResponse.next();
-    //     }
-    //     return NextResponse.redirect(
-    //         new URL("/", req.url)
-    //     );
-    // }
+    
     if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role?.id !== 1){
         return NextResponse.redirect(
             new URL("/auth/login?message=You Are Not Authorized!", req.url)
@@ -36,7 +29,6 @@ export default withAuth(
     else{
         return NextResponse.next();
     }
-    
 
     },
     {
@@ -49,20 +41,3 @@ export default withAuth(
 export const config = {
   matcher: ["/admin/:path*", "/myData/:path*", "/dashboard/:path*"],
 };
-
-// export async function middleware(req: NextRequest) {
-//     const token = await getToken({ req });
-//     const isAuthenticated = !!token;
-//     console.log('middleware 2');
-//     console.log(isAuthenticated);
-    
-//     if (req.nextUrl.pathname.startsWith('/auth')) 
-//     {
-//         if (isAuthenticated){
-//             return NextResponse.redirect(new URL('/', req.url));
-//         }
-//         else {
-//             return NextResponse.next()
-//         }
-//     }
-// }

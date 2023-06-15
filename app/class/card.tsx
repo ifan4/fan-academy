@@ -2,6 +2,7 @@
 
 import { BellRing, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -25,22 +26,18 @@ export default function CardComponent({title,desc,buttonDisable=false,id}:Props)
     const router = useRouter()
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>{title}</CardTitle>
-                <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem!</CardDescription>
+            <CardHeader className="h-[160px] flex-row justify-center p-0 space-y-0 bg-gradient-to-r from-teal-500 to-pink-500">
+                <Image 
+                className="object-contain w-auto h-auto"
+                src={'/learning.png'} 
+                alt={""} 
+                width={200} 
+                height={200}
+                />
             </CardHeader>
-            <CardContent className="grid gap-4">
-                <div className=" flex items-center space-x-4 rounded-md border p-4">
-                <BellRing />
-                    <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                        Push Notifications
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                        Send notifications to device.
-                        </p>
-                    </div>
-                </div>
+            <CardContent className="grid gap-4 mt-4">
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem!</CardDescription>    
             </CardContent>
             <CardFooter>
                 <Button 
