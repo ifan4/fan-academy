@@ -14,9 +14,9 @@ export default withAuth(
     
     
     if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role?.id !== 1){
-        return NextResponse.redirect(
-            new URL("/auth/login?message=You Are Not Authorized!", req.url)
-        );
+       return NextResponse.rewrite(
+        new URL("/notfound",req.url)
+       )
     }
     else if (req.nextUrl.pathname.startsWith("/dashboard") && !req.nextauth){
         return NextResponse.redirect(

@@ -97,7 +97,7 @@ export default function Header() {
 
     return (
         <div className="lg:flex py-8 items-center justify-between hidden px-3">
-            <Link href="/" legacyBehavior passHref>
+            <Link href="/" legacyBehavior passHref role="button">
                 <Image 
                 src={'/logo-no-bg.png'}
                 width={150}
@@ -160,11 +160,11 @@ export default function Header() {
             <div className="flex">
                 {
                     !session?.user 
-                    ?   <Button>
-                            <Link href="/auth/login" legacyBehavior passHref>
-                                    Login
-                            </Link>
-                        </Button>
+                    ?  <Link href="/auth/login" legacyBehavior passHref>   
+                            <Button>
+                                Login
+                            </Button>
+                        </Link>
                 
                     : <DropdownMenuUser displayName={session.user.email}/>
                 }

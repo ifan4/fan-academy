@@ -14,6 +14,19 @@ export const convertDate = (dateInit: string)=>{
 	}
 	return ''
 }
+export const convertDateWithoutTime = (dateInit: string)=>{
+	if (dateInit.includes('T')){
+		const newDate = new Date(dateInit);
+		const month = newDate.toLocaleString("default", { month: "long" });
+		const day = newDate.toLocaleString("default", { day: "numeric" });
+		const dayword = newDate.toLocaleString("default", { weekday: "long" });
+		const year = newDate.toLocaleString("default", { year: "numeric" });
+		const time = newDate.toLocaleTimeString();
+
+		return `${month}, ${day} ${year}`;
+	}
+	return ''
+}
 
 export const textTrunc = (text:string,length:number)=>{
 	let tempText:string
