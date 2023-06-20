@@ -92,11 +92,36 @@ const listData = {
                     </h2>
                     <div className="space-y-1">
                         {
-                            listData.dashboard.map((data)=>{
+                            listData.dashboard.map((data,key)=>{
                                 return(
-                                    <Link href={data.url}>
+                                    <Button
+                                    key={key}
+                                    variant={pathname == data.url ? 'secondary' : 'ghost'}
+                                    size="sm"
+                                    className="w-full justify-start"
+                                    asChild
+                                    >
+                                        <Link href={data.url} >
+                                                {data.icon}
+                                                {data.name}
+                                        </Link>
+                                    </Button>
+                                )   
+                            })
+                        }
+                    </div>
+            </div>
+                <div className="px-4 py-2">
+                    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                    Class Management
+                    </h2>
+                    <div className="space-y-1">
+                        {
+                            listData.classManagement.map((data,key)=>{
+                                return(
+                                    <Link href={data.url} key={key}>
                                         <Button
-                                        variant={pathname == data.url ? 'secondary' : 'ghost'}
+                                        variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
                                         size="sm"
                                         className="w-full justify-start"
                                         >
@@ -108,76 +133,53 @@ const listData = {
                             })
                         }
                     </div>
-            </div>
-            <div className="px-4 py-2">
-                <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-                Class Management
-                </h2>
-                <div className="space-y-1">
-                    {
-                        listData.classManagement.map((data)=>{
-                            return(
-                                <Link href={data.url}>
-                                    <Button
-                                    variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    className="w-full justify-start"
-                                    >
-                                        {data.icon}
-                                        {data.name}
-                                    </Button>
-                                </Link>
-                            )   
-                        })
-                    }
                 </div>
-            </div>
-            <div className="px-4 py-2">
-                <h2 className="px-2 text-lg font-semibold tracking-tight">
-                User Management
-                </h2>
-                <div className="space-y-1">
-                    {
-                        listData.userManagement.map((data)=>{
-                            return(
-                                <Link href={data.url}>
-                                    <Button
-                                    variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    className="w-full justify-start"
-                                    >
-                                        {data.icon}
-                                        {data.name}
-                                    </Button>
-                                </Link>
-                            )   
-                        })
-                    }
+                <div className="px-4 py-2">
+                    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                    User Management
+                    </h2>
+                    <div className="space-y-1">
+                        {
+                            listData.userManagement.map((data, key)=>{
+                                return(
+                                    <Link href={data.url} key={key}>
+                                        <Button
+                                        variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
+                                        size="sm"
+                                        className="w-full justify-start"
+                                        >
+                                            {data.icon}
+                                            {data.name}
+                                        </Button>
+                                    </Link>
+                                )   
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className="px-4 py-2">
-                <h2 className="px-2 text-lg font-semibold tracking-tight">
-                Settings
-                </h2>
-                <div className="space-y-1">
-                    {
-                        listData.settings.map((data)=>{
-                            return(
-                                <Link href={data.url}>
-                                    <Button
-                                    variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
-                                    size="sm"
-                                    className="w-full justify-start"
-                                    >
-                                        {data.icon}
-                                        {data.name}
-                                    </Button>
-                                </Link>
-                            )   
-                        })
-                    }
+                <div className="px-4 py-2">
+                    <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+                    Settings
+                    </h2>
+                    <div className="space-y-1">
+                        {
+                            listData.settings.map((data,key)=>{
+                                return(
+                                    <Link href={data.url} key={key}>
+                                        <Button
+                                        variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
+                                        size="sm"
+                                        className="w-full justify-start"
+                                        >
+                                            {data.icon}
+                                            {data.name}
+                                        </Button>
+                                    </Link>
+                                )   
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         )

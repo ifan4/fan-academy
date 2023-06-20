@@ -10,6 +10,7 @@ import {
     ColumnFiltersState,
     getFilteredRowModel,
 } from "@tanstack/react-table"
+import { Input } from "@/components/ui/input"
 
 import {
     Table,
@@ -19,18 +20,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Input } from "@/components/ui/input"
-
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { useRouter } from "next/navigation"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-export function ClassTable<TData, TValue>({
+export function UserTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
@@ -38,9 +35,6 @@ export function ClassTable<TData, TValue>({
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     )
-
-    const router = useRouter()
-
     const table = useReactTable({
         data,
         columns,
@@ -57,18 +51,17 @@ export function ClassTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex justify-between items-center py-4">
+            <div className="flex items-center py-4">
                 <Input
                 placeholder="Filter name..."
-                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                value={
+                    (table.getColumn("first_name")?.getFilterValue() as string) ?? ""
+                }
                 onChange={(event) =>
-                    table.getColumn("name")?.setFilterValue(event.target.value)
+                    table.getColumn("first_name")?.setFilterValue(event.target.value)
                 }
                 className="max-w-sm"
                 />
-                <Button onClick={()=>router.push('/admin/classManagement/addClass')}>
-                    Add Class
-                </Button>
             </div>
 
             <div className="rounded-md border">

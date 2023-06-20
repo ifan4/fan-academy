@@ -27,12 +27,14 @@ import { useRouter } from "next/navigation"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    class_id: string
 }
 
-export function ClassTable<TData, TValue>({
+export function MateriTable<TData, TValue>({
     columns,
     data,
+    class_id
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
@@ -59,15 +61,15 @@ export function ClassTable<TData, TValue>({
         <div>
             <div className="flex justify-between items-center py-4">
                 <Input
-                placeholder="Filter name..."
-                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                placeholder="Filter title..."
+                value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
                 onChange={(event) =>
-                    table.getColumn("name")?.setFilterValue(event.target.value)
+                    table.getColumn("title")?.setFilterValue(event.target.value)
                 }
                 className="max-w-sm"
                 />
-                <Button onClick={()=>router.push('/admin/classManagement/addClass')}>
-                    Add Class
+                <Button onClick={()=>router.push(`/admin/classManagement/${class_id}/addMateri`)}>
+                    Add Materi
                 </Button>
             </div>
 

@@ -27,14 +27,20 @@ export const fetcherWithToken = async (url:string,accessToken:string) => {
 export const fetchers = async (url:string,req:FetchRequest) => {
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,req)
+  console.log(res);
   
   const jsonData = await res.json()
   if (!res.ok){
+    console.log(jsonData);
     throw new Error(
       jsonData.message ? jsonData.message
       : 'An error occurred while fetching the data.'
     )
   }
+  
+  
+  
+  console.log(jsonData);
   
   return jsonData
     

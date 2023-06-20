@@ -1,13 +1,13 @@
 'use client'
 import { Payment, columns } from "./columns"
-import { ClassTable } from "./class-table"
+import { UserTable } from "./user-table"
 import useSWR from "swr"
 import { fetcher, fetcherWithToken } from "@/lib/fetchers"
 import { useSession } from "next-auth/react"
  
 
 
-export default function classManagement() {
+export default function UserManagement() {
     const {data:session} = useSession()
     const {data:userData, isLoading, error} = useSWR(
         //@ts-ignore
@@ -18,7 +18,7 @@ export default function classManagement() {
         <div>
             {
                 userData &&
-                <ClassTable columns={columns} data={userData} />
+                <UserTable columns={columns} data={userData} />
             }
         </div>
     )

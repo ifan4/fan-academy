@@ -8,6 +8,7 @@ import { materi } from "@/types/interfaces";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { PanelLeftOpen } from "lucide-react";
+import { textTrunc } from "@/lib/helper";
 
 
 export default function Sidebar({materis}:{materis:materi[]}) {
@@ -47,7 +48,7 @@ export default function Sidebar({materis}:{materis:materi[]}) {
                             "text-sm py-8 w-full")}
                         onClick={()=>router.push(`/class/${materi.class_id}/${materi.id}`)}
                         >
-                            {materi.title}
+                            {textTrunc(materi.title,50)}
                         </Button>
                         <Separator className="my-2" />
                     </Fragment>

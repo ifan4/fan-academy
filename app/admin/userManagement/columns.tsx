@@ -1,7 +1,11 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { convertDate, convertDateWithoutTime } from "@/lib/helper"
 import { ColumnDef } from "@tanstack/react-table"
+import { MoreHorizontal, ArrowUpDown } from "lucide-react"
+
+
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -24,7 +28,17 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
     {
         accessorKey: "first_name",
-        header: "First Name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    First Name
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "last_name",
@@ -47,7 +61,6 @@ export const columns: ColumnDef<Payment>[] = [
         header: "Created At",
         cell: ({ row }) => {
             return convertDate(row.getValue("created_at"))
-       
         },
     },
     {
@@ -57,7 +70,7 @@ export const columns: ColumnDef<Payment>[] = [
             if (row.getValue("date_of_birth")){
                 return convertDateWithoutTime(row.getValue("date_of_birth"))
             }
-            return <div className="text-red-300">Haven't filled out yet</div>
+            return <div className="text-red-300">Haven&apos;t filled out yet</div>
         },
     }
 ]

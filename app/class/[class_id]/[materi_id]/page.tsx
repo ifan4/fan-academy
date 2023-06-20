@@ -42,7 +42,7 @@ export default function ClassDetail({ params }: { params: Props }) {
 
   if (isLoadingMateri) <Loading/>
   // if (error || errMateri) throw new Error(error || errMateri); 
-  const Tabs_materi = ({id,description,title,file,video,created_at}:materi) => {
+  const Tabs_materi = ({id,description,title,file,video_materi,created_at}:materi) => {
     return (
       <Tabs defaultValue="materi" className="">
         <TabsList className="grid grid-cols-2">
@@ -51,7 +51,7 @@ export default function ClassDetail({ params }: { params: Props }) {
         </TabsList>
         <TabsContent value="materi" className="border p-3">
           <div className="flex justify-center mb-3">
-              <iframe className="w-full lg:w-[800px] border-slate-800 border-8 rounded-xl" height="400" src={video} title="video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+              <iframe className="w-full lg:w-[800px] border-slate-800 border-8 rounded-xl" height="400" src={video_materi} title="video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
           </div>
           <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 py-4">{title}</h3> 
           <p>
@@ -100,7 +100,7 @@ export default function ClassDetail({ params }: { params: Props }) {
             description={dataMateri?.data?.description} 
             title={dataMateri?.data?.title} 
             file={dataMateri?.data?.file_materi}
-            video={dataMateri?.data?.video_materi} 
+            video_materi={dataMateri?.data?.video_materi} 
             created_at={new Date} 
             />
           </div>

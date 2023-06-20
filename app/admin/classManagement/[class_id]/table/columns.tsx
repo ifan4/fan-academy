@@ -1,6 +1,6 @@
 "use client"
 
-import { convertDate, textTrunc } from "@/lib/helper"
+import { convertDate } from "@/lib/helper"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, ArrowUpDown } from "lucide-react"
 
@@ -14,64 +14,36 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { materi } from "@/types/interfaces"
 
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Class = {
-    id: string
-    name: string
-    description: string
-    created_at: Date
-}
 
-export const columns: ColumnDef<Class>[] = [
+export const columns: ColumnDef<materi>[] = [
     {
-        accessorKey: "name",
+        accessorKey: "title",
         header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                    Name
+                    Title
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             )
-        },
-        cell: ({ row }) => {
-            return textTrunc(row.getValue('name'), 30)
-        },
+        }
     },
     {
         accessorKey: "description",
         header: "Description",
-        cell: ({ row }) => {
-            return <div className="truncate w-48">{row.getValue("description")}</div>
-        },
-    },
-    {
-        accessorKey: "created_at",
-        header: ({ column }) => {
-            return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    Published At
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => {
-            return convertDate(row.getValue("created_at"))
-        },
     },
     {
         id: "actions",
         cell: ({ row }) => {
-            const Class = row.original
-        
+            const Materi = row.original
+            
             return (
                 <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -83,15 +55,15 @@ export const columns: ColumnDef<Class>[] = [
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(Class.id)}
+                    onClick={() => navigator.clipboard.writeText(Materi.id)}
                     >
                     Copy payment ID
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>View students</DropdownMenuItem>
-                    <Link href={`/admin/classManagement/${Class.id}`}>
+                    <Link href={`/admin/classManagement/${Materi.class?.id}/updateMateri/${Materi.id}`}>
                         <DropdownMenuItem>
-                            View Class details
+                            View Materi details
                         </DropdownMenuItem>
                     </Link>
                 </DropdownMenuContent>

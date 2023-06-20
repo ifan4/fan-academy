@@ -6,8 +6,12 @@ export interface materi {
     description:string
     title:string
     file:string
-    video:string
-    created_at:Date
+    video_materi:string
+    created_at:Date,
+    class?: {
+        id: string,
+        name: string
+    }
 }
 export interface class_type {
     id:string
@@ -26,11 +30,13 @@ export interface quiz{
     opsi_d: string,
     opsi_e: string,
     answer: string,
-    materi: {
+    materi?: {
         id: string,
         title: string
-    }
+    },
+    materi_id?: string
 }
+
 
 export interface answer{
     quiz_id: string,
@@ -61,6 +67,7 @@ export interface FetchRequest {
     method?: HTTP_METHOD;
     body?: BodyInit;
     headers?: HeadersInit;
+    data?: any
 }
 
 export interface quizzesSummary{
