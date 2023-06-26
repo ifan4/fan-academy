@@ -14,10 +14,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
+import { useContext, useState } from "react"
+import { AlertDialogClassContext } from "./class-table"
 
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Class = {
     id: string
     name: string
@@ -31,8 +31,8 @@ export const columns: ColumnDef<Class>[] = [
         header: ({ column }) => {
             return (
                 <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Name
                     <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -69,11 +69,12 @@ export const columns: ColumnDef<Class>[] = [
     },
     {
         id: "actions",
-        cell: ({ row }) => {
+        cell: function Cell({row}){
+            const Context = useContext(AlertDialogClassContext)
             const Class = row.original
-        
+            
             return (
-                <DropdownMenu>
+                <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
                     <span className="sr-only">Open menu</span>
@@ -83,9 +84,15 @@ export const columns: ColumnDef<Class>[] = [
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(Class.id)}
+                    className="text-red-700"
+                    onClick={()=>{
+                        Context?.setIsOpen(true)
+                        Context?.setIdChoosed(Class.id)
+                        
+                    }}
+                    // onClick={() => navigator.clipboard.writeText(Class.id)}
                     >
-                    Copy payment ID
+                        Delete
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>View students</DropdownMenuItem>

@@ -51,9 +51,6 @@ export default function RootLayout({children,session}:Props) {
       {/* <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}> */}
     
       <html lang="en">
-        <Head>
-          <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
-        </Head>
 
         <Body/>
 

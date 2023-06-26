@@ -55,7 +55,7 @@ export default function AddClassForm(){
             toast({
                 title: 'Success',
                 description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <pre className="mt-2 w-[340px] rounded-md bg-teal-700 p-4">
                         <p className="text-white">Class Successfully Added!</p>
                     </pre>
                 )

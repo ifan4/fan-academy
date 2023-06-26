@@ -59,7 +59,7 @@ export function MobileHeader() {
                 height={150} alt={"Fan Academy"}                        
                 />
             </Link>
-            <Sheet>
+            <Sheet modal={false}>
                 <SheetTrigger asChild>
                     <Button variant="outline" className="right-0">
                         <LucideMenu/>
@@ -96,7 +96,7 @@ export function MobileHeader() {
                     }
                     <div className="flex justify-evenly mt-7">
                         <DropdownTheme/>
-                        <a href="https://github.com/ifan4/fan-academy" target="_blank">
+                        <a href="https://github.com/ifan4/fan-academy" target="_blank" rel="noreferrer">
                             <Icons.gitHub
                             className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
                             />

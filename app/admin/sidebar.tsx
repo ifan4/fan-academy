@@ -2,14 +2,7 @@ import {
     Search,
     LayoutGrid,
     FolderTree,
-    Library,
-    ListMusic,
-    Mic2,
-    Music,
-    Music2,
-    PlayCircle,
-    Radio,
-    User,
+    ListTodo,
     Building,
     Users,
     FolderKey,
@@ -47,6 +40,11 @@ const listData = {
             name: 'Classes',
             url: '/admin/classManagement',
             icon: <Building className="mr-2 h-4 w-4" />
+        },
+        {
+            name: 'Quiz Scores',
+            url: '/admin/quizScoresManagement',
+            icon: <ListTodo className="mr-2 h-4 w-4" />
         },
         {
             name: 'Class Categories',

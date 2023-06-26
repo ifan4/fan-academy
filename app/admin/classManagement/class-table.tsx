@@ -19,20 +19,48 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog"
+import { Dialog } from "@radix-ui/react-dialog"
 import { Input } from "@/components/ui/input"
 
-import { useState } from "react"
+import { createContext, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { Class } from "./columns"
+import { useSession } from "next-auth/react"
+import { useToast } from "@/components/ui/use-toast"
+import { fetchers } from "@/lib/fetchers"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    mutate: any
 }
+
+export interface alertClass {
+    id: number | string | undefined,
+    isOpen: boolean,
+    setIsOpen: (isOpen:boolean) => void;
+    setIdChoosed: (id: number | string) => void;
+}
+
+
+export const AlertDialogClassContext = createContext<alertClass | undefined>(undefined) 
 
 export function ClassTable<TData, TValue>({
     columns,
     data,
+    mutate
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
@@ -55,8 +83,44 @@ export function ClassTable<TData, TValue>({
         },
     })
 
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [id, setIdChoosed] = useState<string|number|undefined>()
+    const {data:session} = useSession()
+    const { toast } = useToast()
+    
+    const deleteClass = async(id:string|number|undefined)=> {
+    
+        try {
+            await fetchers(`/class/delete/${id}`,{
+                method: 'DELETE',
+                headers: {
+                    //@ts-ignore
+                    Authorization: 'Bearer ' + session?.user.accessToken
+                }
+            })
+            mutate()
+            return toast({
+                title: 'Success',
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-teal-700 p-4">
+                        <p className="text-white">a Class Successfully deleted!</p>
+                    </pre>
+                )
+            })
+        } catch (error) {
+            return toast({
+                title: 'Failed',
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+                        <p className="text-white">a Class Failed to delete!</p>
+                    </pre>
+                )
+            })
+        }
+    }
+
     return (
-        <div>
+        <AlertDialogClassContext.Provider value={{ id, isOpen, setIsOpen,setIdChoosed }}>
             <div className="flex justify-between items-center py-4">
                 <Input
                 placeholder="Filter name..."
@@ -107,14 +171,42 @@ export function ClassTable<TData, TValue>({
                         ))
                     ) : (
                         <TableRow>
-                        <TableCell colSpan={columns.length} className="h-24 text-center">
-                            No results.
-                        </TableCell>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
                         </TableRow>
                     )}
                     </TableBody>
                 </Table>
+                <AlertDialog
+                    open={isOpen || false}
+                    onOpenChange={(isOpen) => {
+                        if (isOpen === true) return;
+                        setIsOpen(false);
+                    }}
+                >
+                    <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete {" "}
+                        <span className="font-medium">|{ id }| 
+                            {`${isOpen}`}
+                        </span>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction 
+                        className="text-red-700"
+                        onClick={()=>deleteClass(id)}
+                        >
+                            Continue Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
-        </div>
+        </AlertDialogClassContext.Provider>
     )
 }

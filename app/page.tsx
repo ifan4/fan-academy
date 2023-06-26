@@ -16,7 +16,6 @@ export default function Home() {
   return (
     <main className="pb-10">
       <Header/>
-      {/* <MobileHeader/> */}
       <div className='text-center space-y-4 py-16 lg:mt-20'>
           <h3 className={`text-xl lg:text-4xl font-bold ${comfortaa.className}`}>Make learning easier with Fan Academy</h3>
           <p className='text-sm lg:text-xl'>
@@ -24,14 +23,6 @@ export default function Home() {
             {/* Welcome to Fan-Academy, the ultimate destination for enthusiasts looking to dive deep into their favorite subjects. With a wide range of courses available, Fan-Academy offers a unique learning experience tailored to meet the needs of every fan. Join our community today and embark on an exciting educational journey that will elevate your understanding and connect you with like-minded enthusiasts from around the world. */}
           </p>
           <Button size={'lg'} className='mt-2' onClick={()=>router.push('/class')}>Start Now</Button>
-
-        {/* <div className='h-10/12 w-full lg:w-1/3 flex justify-center'>
-          <Image 
-          src={'/learning.png'}
-          width={450}
-          height={450} alt={"Fan Academy"}                        
-          />
-        </div> */}
       </div>
 
       <div className='mt-10'>

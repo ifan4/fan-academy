@@ -56,7 +56,7 @@ export default function UpdateClassForm({class_id}:{class_id: string}){
             return toast({
                 title: 'Success',
                 description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <pre className="mt-2 w-[340px] rounded-md bg-teal-700 p-4">
                         <p className="text-white">Class Successfully Updated!</p>
                     </pre>
                 )

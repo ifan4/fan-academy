@@ -22,6 +22,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { quiz } from "@/types/interfaces";
 import { useRouter } from "next/navigation";
 
@@ -167,6 +178,43 @@ export default function QuizzesForm(
             
             
         });
+    }
+
+    const onDelete = async(quiz_id:string|number|null|undefined, index:number)=> {
+        try {
+            if(quiz_id){
+                const quizDeleted = await fetchers(`/quizzes/delete/${quiz_id}`,{
+                    method: 'DELETE',
+                    headers: {
+                        //@ts-ignore
+                        Authorization: 'Bearer ' + session?.user?.accessToken
+                    }
+                })
+
+                remove(index)
+            }else {
+                remove(index)
+            }
+
+            toast({
+                title: 'Success',
+                description: (
+                    <div className="mt-2 w-[340px] break-all rounded-md bg-teal-800 p-4">
+                        <p className="text-white break-all">Quiz successfully deleted!</p>
+                    </div>
+                )
+            })
+           
+        } catch (error) {
+            toast({
+                title: 'Failed',
+                description: (
+                    <div className="mt-2 w-[340px] break-all rounded-md bg-red-800 p-4">
+                        <p className="text-white break-all">Quiz Failed to delete!</p>
+                    </div>
+                )
+            })
+        }
     }
 
     return(
@@ -356,13 +404,32 @@ export default function QuizzesForm(
                                             </FormItem>
                                         )}
                                         />
-                                            <Button 
+                                        <AlertDialog>
+                                            <AlertDialogTrigger className="text-red-800">Delete</AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action cannot be undone. This will permanently delete this quiz
+                                                    and remove this quiz from our servers.
+                                                </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction 
+                                                className="text-red-600"
+                                                onClick={()=>onDelete(form.getValues(`quizzes.${index}.id`),index)}
+                                                >Continue Delete</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                            {/* <Button 
                                         className="text-red-400"
                                         variant={'link'}
                                         onClick={()=>remove(index)}
                                         >
                                             Delete
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 </li>
                             ))
