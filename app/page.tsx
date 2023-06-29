@@ -3,10 +3,10 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import Header from './header'
-import { Comfortaa } from 'next/font/google'
 import {MobileHeader} from '@/components/header/mobileHeader'
 import { School2 } from 'lucide-react'
 import { useState } from 'react'
+import { Comfortaa } from 'next/font/google'
 
 const comfortaa = Comfortaa({ subsets: ['latin'] })
 
@@ -16,9 +16,12 @@ export default function Home() {
   return (
     <main className="pb-10">
       <Header/>
-      <div className='text-center space-y-4 py-16 lg:mt-20'>
-          <h3 className={`text-xl lg:text-4xl font-bold ${comfortaa.className}`}>Make learning easier with Fan Academy</h3>
-          <p className='text-sm lg:text-xl'>
+      <div className='text-center space-y-4 py-16 px-5 lg:mt-20'>
+          <h3 className={`text-2xl lg:text-4xl font-bold ${comfortaa.className}`}>
+            Make learning easier with 
+            <span className="text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-600 block lg:inline"> Fan-Academia</span> 
+          </h3>
+          <p className='text-md lg:text-xl'>
             Fuel your passion, elevate your knowledge. Join our interactive course platform for enthusiasts worldwide.
             {/* Welcome to Fan-Academy, the ultimate destination for enthusiasts looking to dive deep into their favorite subjects. With a wide range of courses available, Fan-Academy offers a unique learning experience tailored to meet the needs of every fan. Join our community today and embark on an exciting educational journey that will elevate your understanding and connect you with like-minded enthusiasts from around the world. */}
           </p>

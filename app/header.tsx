@@ -94,11 +94,11 @@ export default function Header() {
         }
     }
 
-
     return (
         <div className="lg:flex py-8 items-center justify-between hidden px-3">
-            <Link href="/" legacyBehavior passHref role="button">
+            <Link href="/" legacyBehavior passHref>
                 <Image 
+                role="button"
                 src={'/logo-no-bg.png'}
                 width={150}
                 height={150} alt={"Fan Academy"}                        
@@ -147,9 +147,12 @@ export default function Header() {
                         </NavigationMenuContent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <Link href="/" legacyBehavior passHref>
+                        <Link href="/aboutUs" legacyBehavior passHref>
                             <NavigationMenuLink 
-                            className={navigationMenuTriggerStyle()}
+                            className={`
+                            ${navigationMenuTriggerStyle()}
+                            ${pathname?.startsWith('/aboutUs') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
+                        `   }
                             >
                                 About Us
                             </NavigationMenuLink>

@@ -37,7 +37,7 @@ export default function RootLayout({children,session}:Props) {
         fill={true} 
         alt={''}/>
         <SessionProvider session={session}>
-          <div className='relative z-10 sm:container'>
+          <div className='sm:container'>
             {children}
           </div>
         </SessionProvider>

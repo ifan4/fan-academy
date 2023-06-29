@@ -189,10 +189,7 @@ export function ClassTable<TData, TValue>({
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                         <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete {" "}
-                        <span className="font-medium">|{ id }| 
-                            {`${isOpen}`}
-                        </span>
+                        This action cannot be undone. This will permanently delete this class 
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

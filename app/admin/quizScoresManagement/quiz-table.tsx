@@ -128,7 +128,7 @@ export function QuizTable<TData, TValue>({
                 >
                 Next
                 </Button>
-        </div>
+            </div>
         </div>
     )
 }
