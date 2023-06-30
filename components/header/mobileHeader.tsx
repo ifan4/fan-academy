@@ -92,7 +92,7 @@ export function MobileHeader() {
                             </Link>
                         </>
                         :
-                        <DropdownMenuUser displayName={session.user?.name}/>
+                        <DropdownMenuUser name={session.user?.name} email={session?.user?.email}/>
                     }
                     <div className="flex justify-evenly mt-7">
                         <DropdownTheme/>

@@ -23,7 +23,7 @@ export default function AboutUs() {
                 </div>
 
                 <div className="text-center bg-gradient-to-r from-cyan-500 to-teal-900 p-4 rounded-t-3xl dark:from-cyan-900 dark:to-slate-900">
-                    <h2 className="text-3xl mb-4 font-bold">
+                    <h2 className="text-3xl mb-4 font-bold p-2 rounded-lg dark:bg-none bg-gradient-to-r from-slate-950 to-teal-950 inline-block">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-600"> Fan-Academia </span> 
                         Core Team
                     </h2>
@@ -40,12 +40,18 @@ export default function AboutUs() {
                                 <div>Founder</div>
                             </div>
                             <div className="flex justify-center space-x-4">
-                                <Icons.gitHub 
-                                className="w-5 h-5 hover:opacity-60" 
-                                role="button"/>
-                                <Twitter 
-                                className="w-5 h-5 hover:opacity-60"
-                                role="button"/>
+                                <a href="https://github.com/ifan4" target="_blank" rel="noreferrer">
+                                    <Icons.gitHub 
+                                    className="w-5 h-5 hover:opacity-60" 
+                                    role="button"
+                                    />
+                                </a>
+                                <a href="https://twitter.com/ifantasprite" target="_blank" rel="noreferrer">
+                                    <Twitter 
+                                    className="w-5 h-5 hover:opacity-60"
+                                    role="button"
+                                    />
+                                </a>
                             </div>
                         </div>
                         
@@ -56,13 +62,13 @@ export default function AboutUs() {
                     <div className="">
                         <h2 className="text-2xl font-extrabold mb-2">About the Founder</h2>
                         <p className="leading-7 [&:not(:first-child)]:mt-6">
-                            As a founder of this e-learning platform, I carry a deep sense of responsibility rooted in my family's legacy and my own educational achievements. Being entrusted with the care of my grandparents, who were esteemed school principals, has instilled in me a profound appreciation for the transformative power of education. Moreover, earning a Bachelor's degree in Education has further solidified my commitment to delivering high-quality learning
+                            As a founder of this e-learning platform, I carry a deep sense of responsibility rooted in my family&apos;s legacy and my own educational achievements. Being entrusted with the care of my grandparents, who were esteemed school principals, has instilled in me a profound appreciation for the transformative power of education. Moreover, earning a Bachelor&apos;s degree in Education has further solidified my commitment to delivering high-quality learning
                         </p>
                         <p className="leading-7 [&:not(:first-child)]:mt-6">  
                             In addition to my educational background, I bring two years of practical experience as both a full-stack and frontend developer. This hands-on experience in the field of web development has equipped me with a comprehensive understanding of technology and its potential to enhance the learning process. I am passionate about merging my knowledge of education and technical skills to create an e-learning platform that effectively engages learners and empowers them to succeed.
                         </p>
                         <p className="leading-7 [&:not(:first-child)]:mt-6">
-                            Driven by the belief that education should be accessible to all, I founded this platform to provide a diverse range of interactive courses. By leveraging my expertise in education and web development, I aim to create a dynamic learning environment that equips learners with the practical skills and knowledge needed to thrive in today's digital world. Together, let's embark on a transformative educational journey and unlock the full potential within each learner.
+                            Driven by the belief that education should be accessible to all, I founded this platform to provide a diverse range of interactive courses. By leveraging my expertise in education and web development, I aim to create a dynamic learning environment that equips learners with the practical skills and knowledge needed to thrive in today&apos;s digital world. Together, let&apos;s embark on a transformative educational journey and unlock the full potential within each learner.
                         </p>
                     </div>
                 </div>

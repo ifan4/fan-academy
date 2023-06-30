@@ -20,7 +20,8 @@ import {
     LogOut,
     User,
     Moon,
-    Sun
+    Sun,
+    UserCircle2
   } from "lucide-react"
   import { Icons } from "@/components/icons"
   import { useDispatch } from "react-redux";
@@ -84,7 +85,7 @@ const components: { title: string; href: string; description: string }[] = [
 ]
 
 export default function Header() {
-    const {data:session} = useSession()
+    const {data:session, status} = useSession()
     const pathname = usePathname()
     const [width, height] = useDeviceSize();
 
@@ -99,7 +100,7 @@ export default function Header() {
             <Link href="/" legacyBehavior passHref>
                 <Image 
                 role="button"
-                src={'/logo-no-bg.png'}
+                src={'/Logo-Fan-Academy.png'}
                 width={150}
                 height={150} alt={"Fan Academy"}                        
                 />
@@ -160,16 +161,16 @@ export default function Header() {
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
-            <div className="flex">
+            <div className="flex lg:w-[300px]">
                 {
-                    !session?.user 
+                    !session?.user
                     ?  <Link href="/auth/login" legacyBehavior passHref>   
-                            <Button>
+                            <Button className="font-bold text-lg">
                                 Login
                             </Button>
                         </Link>
-                
-                    : <DropdownMenuUser displayName={session.user.email}/>
+                    //@ts-ignore
+                    : <DropdownMenuUser email={session?.user.email} name={session?.user?.name}/>
                 }
                 <div className="flex items-center border-l border-slate-600 space-x-4 ml-6 pl-6 dark:border-slate-400">
                 
@@ -211,18 +212,25 @@ ListItem.displayName = "ListItem"
 
 
 
-export function DropdownMenuUser({displayName}:{displayName?:string |null }) {
+export function DropdownMenuUser({email, name}:{email?:string |null, name?:string | null }) {
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full lg:w-auto">
-                    Sign In as &nbsp;
-                    <span className="text-sm underline decoration-pink-500 font-medium leading-none">{displayName}</span>
-                </Button>
+                    <Button variant="outline" className="w-full lg:w-auto">
+                    <UserCircle2 className="w-5 h-5 mr-2"/>
+                        My Account
+                    </Button>
             </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">{name}</p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                        {email}
+                        </p>
+                    </div>
+                </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <Link href={'/dashboard/profile'}>
