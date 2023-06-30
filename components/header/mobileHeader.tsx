@@ -54,7 +54,7 @@ export function MobileHeader() {
             <Link href="/">
                 <Image 
                 className="col-span-3"
-                src={'/logo-no-bg.png'}
+                src={'/Logo-Fan-Academia.png'}
                 width={150}
                 height={150} alt={"Fan Academy"}                        
                 />
