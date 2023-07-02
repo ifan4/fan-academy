@@ -3,7 +3,11 @@ import { RequestOptions } from "https";
 import { NextConfig } from "next";
 
 export const fetcher = async (url:string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,{
+      headers: {
+        'ngrok-skip-browser-warning':'true'
+      }
+    })
     if (!res.ok) {
       throw new Error('An error occurred while fetching the data.')
     }
@@ -14,7 +18,8 @@ export const fetcherWithToken = async (url:string,accessToken:string) => {
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,{
       headers: {
-        Authorization: 'Bearer ' + accessToken
+        Authorization: 'Bearer ' + accessToken,
+        'ngrok-skip-browser-warning':'true'
       }
     })
     if (!res.ok) {
@@ -56,6 +61,7 @@ export const fetcherFile = async (url:string,accessToken:string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`,{
       headers: {
         Authorization: 'Bearer ' + accessToken,
+        'ngrok-skip-browser-warning':'true'
         // 'content-type': 'application/pdf',
       }
     })
