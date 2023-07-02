@@ -12,7 +12,7 @@ const comfortaa = Comfortaa({ subsets: ['latin'] })
 
 export default function ClassPage() {
     const { data, isLoading, error } = useSWR('/class', fetcher)
-    if (error) throw new Error(error)
+    // if (error) throw new Error(error)
     
 
     return(
