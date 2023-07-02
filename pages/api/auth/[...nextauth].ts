@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const { email, password } = credentials as any;
-        const res = await fetch(`http://127.0.0.1:8000/api/authentication/login`, {
+        const res = await fetch(`https://2068-114-122-102-10.ngrok-free.app/api/authentication/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
