@@ -51,12 +51,14 @@ export function MobileHeader() {
 
     return (
         <div className="flex border-b-2 p-3 sticky top-0 backdrop-blur-sm items-center justify-between px-7 lg:px-3">
-            <Link href="/">
+            <Link href="/" passHref>
                 <Image 
                 className="col-span-3"
                 src={'/Logo-Fan-Academia.png'}
                 width={150}
-                height={150} alt={"Fan Academy"}                        
+                height={17} 
+                alt={"Fan Academy"}     
+                loading="lazy"                
                 />
             </Link>
             <Sheet modal={false}>

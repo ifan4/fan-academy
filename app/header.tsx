@@ -96,95 +96,101 @@ export default function Header() {
     }
 
     return (
-        <div className="lg:flex py-8 items-center justify-between hidden px-3">
-            <Link href="/" legacyBehavior passHref>
-                <Image 
-                role="button"
-                src={'/Logo-Fan-Academia.png'}
-                width={150}
-                height={150} alt={"Fan Academy"}                        
-                />
-            </Link>
-            <NavigationMenu>
-                <NavigationMenuList>
-                    
-                    <NavigationMenuItem>
-                        <Link href="/" legacyBehavior passHref>
-                            <NavigationMenuLink 
-                            className={`
-                            ${navigationMenuTriggerStyle()}
-                            ${pathname == '/' && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
-                            `}
-                            >
-                                Home
-                            </NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href="/class" legacyBehavior passHref>
-                        <NavigationMenuLink 
-                        className={`
-                            ${navigationMenuTriggerStyle()}
-                            ${pathname?.startsWith('/class') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
-                        `}>
-                        Class
-                        </NavigationMenuLink>
-                    </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>Category</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                            {components.map((component) => (
-                                <ListItem
-                                key={component.title}
-                                title={component.title}
-                                href={component.href}
+        <>
+            <div className="lg:flex py-8 items-center justify-between hidden px-3">
+                <Link href="/" legacyBehavior passHref>
+                    <Image 
+                    role="button"
+                    src={'/Logo-Fan-Academia.png'}
+                    width={150}
+                    height={17} 
+                    alt={"Fan Academy"}                        
+                    />
+                </Link>
+                <NavigationMenu>
+                    <NavigationMenuList>
+                        
+                        <NavigationMenuItem>
+                            <Link href="/" legacyBehavior passHref>
+                                <NavigationMenuLink 
+                                className={`
+                                ${navigationMenuTriggerStyle()}
+                                ${pathname == '/' && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
+                                `}
                                 >
-                                {component.description}
-                                </ListItem>
-                            ))}
-                            </ul>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
+                                    Home
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <Link href="/aboutUs" legacyBehavior passHref>
+                        <Link href="/class" legacyBehavior passHref>
                             <NavigationMenuLink 
                             className={`
-                            ${navigationMenuTriggerStyle()}
-                            ${pathname?.startsWith('/aboutUs') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
-                        `   }
-                            >
-                                About Us
+                                ${navigationMenuTriggerStyle()}
+                                ${pathname?.startsWith('/class') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
+                            `}>
+                            Class
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
-            <div className="flex lg:w-[300px] justify-end">
-                {
-                    status !== 'loading' &&
-                    (!session?.user
-                    ?  <Link href="/auth/login" legacyBehavior passHref>   
-                            <Button className="font-bold text-lg">
-                                Login
-                            </Button>
-                        </Link>
-                    //@ts-ignore
-                    : <DropdownMenuUser email={session?.user.email} name={session?.user?.name}/>)
-                }
-                <div className="flex items-center border-l border-slate-600 space-x-4 ml-6 pl-6 dark:border-slate-400">
-                
-                        <DropdownTheme/>
-        
-                        <a href="https://github.com/ifan4/fan-academy" target="_blank" rel='noreferrer'>
-                            <Icons.gitHub
-                            className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
-                            />
-                        </a>
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Category</NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {components.map((component) => (
+                                    <ListItem
+                                    key={component.title}
+                                    title={component.title}
+                                    href={component.href}
+                                    >
+                                    {component.description}
+                                    </ListItem>
+                                ))}
+                                </ul>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <Link href="/aboutUs" legacyBehavior passHref>
+                                <NavigationMenuLink 
+                                className={`
+                                ${navigationMenuTriggerStyle()}
+                                ${pathname?.startsWith('/aboutUs') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
+                            `   }
+                                >
+                                    About Us
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                    </NavigationMenuList>
+                </NavigationMenu>
+                <div className="flex lg:w-[300px] justify-end">
+                    {
+                        status !== 'loading' &&
+                        (!session?.user
+                        ?  <Link href="/auth/login" legacyBehavior passHref>   
+                                <Button className="font-bold text-lg">
+                                    Login
+                                </Button>
+                            </Link>
+                        //@ts-ignore
+                        : <DropdownMenuUser email={session?.user.email} name={session?.user?.name}/>)
+                    }
+                    <div className="flex items-center border-l border-slate-600 space-x-4 ml-6 pl-6 dark:border-slate-400">
+                    
+                            <DropdownTheme/>
+            
+                            <a href="https://github.com/ifan4/fan-academy" target="_blank" rel='noreferrer'>
+                                <Icons.gitHub
+                                className="h-5 w-5 opacity-60 hover:opacity-100" role="button"
+                                />
+                            </a>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="visible lg:hidden">
+                <MobileHeader/>
+            </div>
+        </>
     )
 }
 
