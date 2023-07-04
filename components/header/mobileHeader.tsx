@@ -5,7 +5,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { LucideMenu, Home, School2, User2,ArrowDownWideNarrow } from 'lucide-react'
+import { LucideMenu, Home, School2, User2,ArrowDownWideNarrow, Heading1 } from 'lucide-react'
 import { ReactNode } from "react"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
@@ -56,9 +56,8 @@ export function MobileHeader() {
                 className="col-span-3"
                 src={'/Logo-Fan-Academia.png'}
                 width={150}
-                height={17} 
-                alt={"Fan Academy"}     
-                loading="lazy"
+                height={17}
+                alt={"Fan Academy"}
                 priority={true}         
                 />
             </Link>
