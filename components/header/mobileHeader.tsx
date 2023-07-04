@@ -58,7 +58,8 @@ export function MobileHeader() {
                 width={150}
                 height={17} 
                 alt={"Fan Academy"}     
-                loading="lazy"                
+                loading="lazy"
+                priority={true}         
                 />
             </Link>
             <Sheet modal={false}>

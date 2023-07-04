@@ -104,7 +104,8 @@ export default function Header() {
                     src={'/Logo-Fan-Academia.png'}
                     width={150}
                     height={17} 
-                    alt={"Fan Academy"}                        
+                    alt={"Fan Academy"}       
+                    priority={true}                 
                     />
                 </Link>
                 <NavigationMenu>
