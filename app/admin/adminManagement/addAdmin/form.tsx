@@ -141,7 +141,6 @@ export default function AddAdminForm(){
                                 value={user.id}
                                 key={user.id}
                                 onSelect={(value) => {
-                                    alert(JSON.stringify(user))
                                     form.setValue("user", {id: user.id, email: user.email})
                                 }}
                                 >
