@@ -85,3 +85,19 @@ export interface error{
 export interface theme {
     name: 'dark' | 'light'
 } 
+
+export interface user {
+    id: string,
+    first_name: string,
+    last_name: string,
+    nisn: string,
+    role: {
+        id: string,
+        name: 'admin' | 'user' | 'creator'
+    },
+    email: string
+    email_verified_at: Date
+    created_at: Date
+    updated_at: Date
+    date_of_birth: Date
+}

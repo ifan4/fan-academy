@@ -8,6 +8,7 @@ import {
     FolderKey,
     User2,
     Fingerprint,
+    UserCog
   } from "lucide-react"
   
   import { cn } from "@/lib/utils"
@@ -57,6 +58,11 @@ const listData = {
             name: 'User',
             url: '/admin/userManagement',
             icon: <Users className="mr-2 h-4 w-4" />
+        },
+        {
+            name: 'Admin',
+            url: '/admin/adminManagement',
+            icon: <UserCog className="mr-2 h-4 w-4" />
         },
         {
             name: 'Role',
