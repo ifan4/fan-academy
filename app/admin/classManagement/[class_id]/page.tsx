@@ -1,7 +1,7 @@
 'use client'
 
 import useSWR from "swr";
-import { MateriTable } from "./table/class-table";
+import { MateriTable } from "./table/materi-table";
 import UpdateClassForm from "./update-class-form";
 import { columns } from "./table/columns";
 import { fetcher } from "@/lib/fetchers";

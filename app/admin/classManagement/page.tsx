@@ -11,9 +11,10 @@ import { useToast } from "@/components/ui/use-toast"
 export default function ClassManagement() {
     const {data:session} = useSession()
     const {data:classData, isLoading, error, mutate} = useSWR(
-        //@ts-ignore
-        ['/class',session?.user?.accessToken],
-        ([url,accessToken])=>fetcher(url))
+            //@ts-ignore
+            ['/class',session?.user?.accessToken],
+            ([url,accessToken])=>fetcher(url)
+        )
 
     return(
         <div>
