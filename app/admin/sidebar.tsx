@@ -49,7 +49,7 @@ const listData = {
         },
         {
             name: 'Class Categories',
-            url: '#',
+            url: '/admin/categoryManagement',
             icon: <FolderTree className="mr-2 h-4 w-4" />
         },
     ],
@@ -102,7 +102,7 @@ const listData = {
                                     key={key}
                                     variant={pathname == data.url ? 'secondary' : 'ghost'}
                                     size="sm"
-                                    className="w-full justify-start"
+                                    className="w-full justify-start my-[1px]"
                                     asChild
                                     >
                                         <Link href={data.url} >
@@ -127,7 +127,7 @@ const listData = {
                                         <Button
                                         variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
                                         size="sm"
-                                        className="w-full justify-start"
+                                        className="w-full justify-start my-[1px]"
                                         >
                                             {data.icon}
                                             {data.name}
@@ -150,8 +150,8 @@ const listData = {
                                         <Button
                                         variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
                                         size="sm"
-                                        className="w-full justify-start"
-                                        >
+                                        className="w-full justify-start my-[1px]"
+                                        > 
                                             {data.icon}
                                             {data.name}
                                         </Button>
@@ -173,7 +173,7 @@ const listData = {
                                         <Button
                                         variant={pathname?.startsWith(data.url) ? 'secondary' : 'ghost'}
                                         size="sm"
-                                        className="w-full justify-start"
+                                        className="w-full justify-start my-[1px]"
                                         >
                                             {data.icon}
                                             {data.name}

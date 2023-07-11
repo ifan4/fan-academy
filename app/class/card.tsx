@@ -19,10 +19,11 @@ interface Props {
     id:string;
     title: string;
     desc: string;
+    category: string;
     buttonDisable?: boolean;
 }
 
-export default function CardComponent({title,desc,buttonDisable=false,id}:Props) {
+export default function CardComponent({title,desc,category,buttonDisable=false,id}:Props) {
     const router = useRouter()
     return (
         <Card>
@@ -35,8 +36,9 @@ export default function CardComponent({title,desc,buttonDisable=false,id}:Props)
                 height={200}
                 />
             </CardHeader>
-            <CardContent className="grid gap-4 mt-4">
+            <CardContent className="mt-4 space-y-1">
                 <CardTitle>{title}</CardTitle>
+                <div className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-600 inline-block">{category}</div >
                 <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem!</CardDescription>    
             </CardContent>
             <CardFooter>

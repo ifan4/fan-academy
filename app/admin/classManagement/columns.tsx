@@ -16,16 +16,10 @@ import {
 import Link from "next/link"
 import { useContext, useState } from "react"
 import { AlertDialogClassContext } from "./class-table"
+import { class_type } from "@/types/interfaces"
 
 
-export type Class = {
-    id: string
-    name: string
-    description: string
-    created_at: Date
-}
-
-export const columns: ColumnDef<Class>[] = [
+export const columns: ColumnDef<class_type>[] = [
     {
         accessorKey: "name",
         header: ({ column }) => {
@@ -49,6 +43,10 @@ export const columns: ColumnDef<Class>[] = [
         cell: ({ row }) => {
             return <div className="truncate w-48">{row.getValue("description")}</div>
         },
+    },
+    {
+        accessorKey: "category.name",
+        header: "Category",
     },
     {
         accessorKey: "created_at",

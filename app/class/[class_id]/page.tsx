@@ -34,6 +34,13 @@ export default function ClassDetail({ params }: { params: Props }) {
                     data && 
                     <>
                         <h3 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{data.data.name}</h3>
+                        <div className="text-lg">
+                          Category: {' '}
+                          <span>
+                            {data.data.category.name}
+                          </span>
+                          
+                        </div >
                         <small className="text-sm font-medium leading-none"> Published at {convertDate(data.data.created_at)}</small>
                         <p className="leading-7 [&:not(:first-child)]:mt-6 mb-10">{data.data.description}</p>
                         <h4 className="scroll-m-20 border-b pb-2 text-lg lg:text-3xl font-semibold tracking-tight transition-colors first:mt-0">List chapters</h4>

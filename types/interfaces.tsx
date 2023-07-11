@@ -13,13 +13,25 @@ export interface materi {
         name: string
     }
 }
+
+export interface category{
+    id: string | bigint | any,
+    name: string,
+    description: string | undefined,
+    created_at: Date | undefined,
+    updated_at: Date | undefined,
+}
+
 export interface class_type {
+    category: category | undefined
     id:string
     name:string
     description:string
     created_at:Date
     materis?:materi[]
 }
+
+
 
 export interface quiz{
     id: string,

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Loader2,Trash } from "lucide-react";
 import useSWR from "swr";
-import { fetcherWithToken, fetchers } from "@/lib/fetchers";
+import { fetcher, fetcherWithToken, fetchers } from "@/lib/fetchers";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -40,6 +40,7 @@ export default function UpdateMateri({params}: {params: Props}){
         [`/materi/${params.materi_id}?with_quizzes=true`, session?.user?.accessToken],
         ([url,accessToken])=> fetcherWithToken(url,accessToken)
     )
+
 
     const deleteChapter = async()=> {
         try {

@@ -31,17 +31,23 @@ export default function ClassPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-9 lg:gap-4">
                 {
                     data && data?.data?.map((d:class_type,key:string)=>(
-                        <CardComponent key={d.id} id={d.id} title={d.name} desc={d.description}/>
+                        <CardComponent 
+                        key={d.id} 
+                        id={d.id} 
+                        title={d.name} 
+                        desc={d.description}
+                        category={d.category.name}
+                        />
                     ))
                 }
 
                 {
                     data &&
                     <>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''}/>
+                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'frontend'}/>
+                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'backend'}/>
+                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'frontend'}/>
+                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'programming fundamental'}/>
                     </>
                 }
                 

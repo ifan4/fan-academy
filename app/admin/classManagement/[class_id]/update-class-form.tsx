@@ -13,7 +13,14 @@ import useSWR from "swr";
 import { fetcher, fetchers } from "@/lib/fetchers";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
-
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
+import { category } from "@/types/interfaces";
 
 const formSchema = z.object({
     name: z.string().min(10, {
@@ -21,14 +28,19 @@ const formSchema = z.object({
     }),
     description: z.string().min(50, {
         message: 'Description must be at least 50 characters.'
+    }),
+    category_id: z.string({
+        required_error: 'Please select a category.'
     })
 })
 
 export default function UpdateClassForm({class_id}:{class_id: string}){
     const {data:session} = useSession()
+    const {data:categories, isLoading:isCategoriesLoading, error:categoriesError} = useSWR('/categories', fetcher)
     const {data, isLoading:isDataLoading, error} = useSWR(`/class/${class_id}`, fetcher)
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -37,6 +49,9 @@ export default function UpdateClassForm({class_id}:{class_id: string}){
     useEffect(()=>{
         form.setValue('name',data?.data.name)
         form.setValue('description',data?.data.description)
+        form.setValue('category_id',data?.data.category.id.toString())
+        console.log(form.getValues());
+        
     },[data])
 
     const onSubmit = async(values:z.infer<typeof formSchema>)=> {
@@ -50,7 +65,11 @@ export default function UpdateClassForm({class_id}:{class_id: string}){
                     "Content-Type": 'application/json',
                     Accept: 'application/json'
                 },
-                body: JSON.stringify(values)
+                body: JSON.stringify({
+                    name: values.name,
+                    description: values.description,
+                    category_id: parseInt(values.category_id)
+                })
             })
 
             return toast({
@@ -82,6 +101,46 @@ export default function UpdateClassForm({class_id}:{class_id: string}){
                 <form 
                 className="space-y-4"
                 onSubmit={form.handleSubmit(onSubmit)}>
+
+                    <FormField
+                    control={form.control}
+                    name="category_id"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        value={field.value}
+                        >
+                            <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a category"/>
+                            </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                {
+                                    categories && categories?.data.map((category:category,key:number)=>(
+                                            <SelectItem
+                                            key={key} 
+                                            value={category.id.toString()}
+                                            
+                                            >
+                                                {category.name}
+                                            </SelectItem>
+                                        )
+                                    )
+                                }
+                            </SelectContent>
+                        </Select>
+                        <FormDescription>
+                            
+                        </FormDescription>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+
                     <FormField
                     control={form.control}
                     name="name"

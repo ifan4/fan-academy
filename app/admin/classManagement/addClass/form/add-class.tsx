@@ -7,13 +7,21 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { fetchers } from "@/lib/fetchers";
+import { fetcher, fetchers } from "@/lib/fetchers";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
+import useSWR from "swr";
+import { category } from "@/types/interfaces";
 
 const formSchema = z.object({
     name: z.string().min(10, {
@@ -21,6 +29,9 @@ const formSchema = z.object({
     }),
     description: z.string().min(50, {
         message: 'Description must be at least 50 characters.'
+    }),
+    category_id: z.string({
+        required_error: 'Please select a category.'
     })
 })
 
@@ -29,6 +40,9 @@ export default function AddClassForm(){
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { toast } = useToast()
     const router = useRouter()
+
+    const {data:categories, isLoading:isCategoriesLoading, error} = useSWR('/categories', fetcher)
+    
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -45,12 +59,13 @@ export default function AddClassForm(){
                     //@ts-ignore
                     Authorization: 'Bearer ' + session?.user?.accessToken,
                 },
-                body: JSON.stringify(values)
+                body: JSON.stringify({
+                    name: values.name,
+                    description: values.description,
+                    category_id: parseInt(values.category_id)
+
+                })
             })
-            console.log('newClass');
-            console.log(newClass);
-            
-            
 
             toast({
                 title: 'Success',
@@ -75,6 +90,44 @@ export default function AddClassForm(){
                 <form 
                 className="space-y-4"
                 onSubmit={form.handleSubmit(onSubmit)}>
+
+                    <FormField
+                    control={form.control}
+                    name="category_id"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <Select 
+                        onValueChange={field.onChange} 
+                        defaultValue={field.value}>
+                            <FormControl>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a category" />
+                            </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                {
+                                    categories && categories?.data.map((category:category,key:number)=>(
+                                            <SelectItem
+                                            key={key} 
+                                            value={category.id.toString()}
+                                            
+                                            >
+                                                {category.name}
+                                            </SelectItem>
+                                        )
+                                    )
+                                }
+                            </SelectContent>
+                        </Select>
+                        <FormDescription>
+                            
+                        </FormDescription>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+
                     <FormField
                     control={form.control}
                     name="name"
@@ -102,6 +155,7 @@ export default function AddClassForm(){
                         </FormItem>
                     )}
                     />
+
                     <Button 
                     type="submit"
                     >
