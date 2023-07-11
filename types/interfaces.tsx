@@ -23,7 +23,7 @@ export interface category{
 }
 
 export interface class_type {
-    category: category | undefined
+    category: category
     id:string
     name:string
     description:string
