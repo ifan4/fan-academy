@@ -46,12 +46,6 @@ export default function AboutUs() {
                                     role="button"
                                     />
                                 </a>
-                                <a href="https://twitter.com/ifantasprite" target="_blank" rel="noreferrer">
-                                    <Twitter 
-                                    className="w-5 h-5 hover:opacity-60"
-                                    role="button"
-                                    />
-                                </a>
                             </div>
                         </div>
                         
