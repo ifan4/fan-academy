@@ -29,9 +29,9 @@ const formSchema = z.object({
         message: 'Invalid NISN'
     }).optional(),
     email: z.string().email(),
-    date_of_birth: z.date({
-        required_error: "A date of birth is required.",
-      }),
+    // date_of_birth: z.date({
+    //     required_error: "A date of birth is required.",
+    //   }).optional(),
   })
 
 
@@ -53,7 +53,7 @@ export default function ProfileForm(){
         form.setValue('last_name',data?.data.last_name?data?.data.last_name:'')
         form.setValue('nisn',data?.data.nisn?data?.data.nisn:'')
         form.setValue('email',data?.data.email)
-        form.setValue('date_of_birth',new Date(data?.data.date_of_birth))
+        // form.setValue('date_of_birth',new Date(data?.data.date_of_birth))
     },[data])
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -72,7 +72,7 @@ export default function ProfileForm(){
                     last_name: values.last_name,
                     nisn: values.nisn,
                     email: values.email,
-                    date_of_birth: values.date_of_birth.toDateString(),
+                    // date_of_birth: values.date_of_birth.toDateString(),
                 })
             })
             
@@ -156,7 +156,7 @@ export default function ProfileForm(){
                     </FormItem>
                     )}
                 />
-                <FormField
+                {/* <FormField
                 control={form.control}
                 name="date_of_birth"
                 render={({ field }) => (
@@ -196,7 +196,7 @@ export default function ProfileForm(){
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
                 <Button 
                 type="submit"
