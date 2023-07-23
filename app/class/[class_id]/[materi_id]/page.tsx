@@ -23,9 +23,9 @@ export default function ClassDetail({ params }: { params: Props }) {
   
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false)
 
-  const {data:dataClass, error, isLoading} = useSWR(`/class/${class_id}?with_materis=true`,fetcher, {refreshInterval: 20000})
+  const {data:dataClass, error, isLoading} = useSWR(`/class/${class_id}?with_materis=true`,fetcher)
 
-  const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher, {refreshInterval: 20000})
+  const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher)
   
   const onDownload = async()=>{
     setIsFileLoading(true)
@@ -57,18 +57,21 @@ export default function ClassDetail({ params }: { params: Props }) {
           <p>
             {description}
           </p>
-          <Button 
-          onClick={()=>onDownload()}
-          className="space-x-2 my-2">
-            {
-              !isFileLoading 
-              ? <>
-                  <Eye/>
-                </>
-              : <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            }
-            <div>Lihat Materi</div>
-          </Button>
+          {
+            dataMateri?.data?.file_materi 
+              &&  <Button 
+                  onClick={()=>onDownload()}
+                  className="space-x-2 my-2">
+                    {
+                      !isFileLoading 
+                      ? <>
+                          <Eye/>
+                        </>
+                      : <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    }
+                    <div>Lihat Materi</div>
+                  </Button>
+          }
         </TabsContent>
         <TabsContent value="quiz">
           <div className="border lg:px-10">

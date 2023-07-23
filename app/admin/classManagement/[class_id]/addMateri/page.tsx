@@ -56,7 +56,7 @@ const formSchema = z.object({
     description:z.string().min(20, {
         message: 'Description must be at least 50 characters.'
     }),
-    file:  z.any(),
+    file:  z.any().optional(),
     video:z.string(),
     quizzes: z.array(quizSchema)
 })
@@ -107,7 +107,9 @@ export default function MateriForm({params}: {params: Props}){
         formData.append('class_id', params.class_id)
         formData.append('title', values.title)
         formData.append('description', values.description)
-        formData.append('file', values.file[0])
+        if (values.file){
+            formData.append('file', values.file[0])
+        }
         formData.append('video_materi', values.video)
         
         try {
