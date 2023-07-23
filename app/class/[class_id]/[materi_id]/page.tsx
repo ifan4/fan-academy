@@ -11,6 +11,9 @@ import { useSession } from "next-auth/react";
 import { Eye, Loader2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import PDFReader from "./pdfReader/pdfReader";
+
+
 
 
 interface Props{
@@ -27,11 +30,30 @@ export default function ClassDetail({ params }: { params: Props }) {
 
   const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher)
   
+  const [filePDF, setFilePDF] = useState<any>(null);
+
+
   const onDownload = async()=>{
     setIsFileLoading(true)
     try {
       // @ts-ignore
-      return await fetcherFile(`/materi/download/${dataMateri?.data?.file_materi}`,session?.user?.accessToken)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/materi/download/${dataMateri?.data?.file_materi}`,{
+        headers: {
+          //@ts-ignore
+          Authorization: 'Bearer ' + session?.user?.accessToken,
+        }
+      })
+      .then( res => res.blob() )
+      .then( blob => {
+        var file = window.URL.createObjectURL(blob);
+        
+        return setFilePDF(file)
+      })
+      .catch(err=>{
+        console.log(res);
+        throw new Error('An error occurred while fetching the data.')
+      })
+      
     } catch (error) {
       
     }
@@ -54,24 +76,29 @@ export default function ClassDetail({ params }: { params: Props }) {
               <iframe className="w-full lg:w-[800px] border-slate-800 border-8 rounded-xl" height="400" src={video_materi} title="video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
           </div>
           <h3 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 py-4">{title}</h3> 
-          <p>
+          <p className="py-7 leading-4 lg:leading-7">
             {description}
           </p>
           {
-            dataMateri?.data?.file_materi 
-              &&  <Button 
-                  onClick={()=>onDownload()}
-                  className="space-x-2 my-2">
-                    {
-                      !isFileLoading 
-                      ? <>
-                          <Eye/>
-                        </>
-                      : <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    }
-                    <div>Lihat Materi</div>
-                  </Button>
+            dataMateri?.data?.file_materi &&
+              <Button 
+              onClick={()=>onDownload()}
+              className="space-x-2 my-2 w-full lg:py-7">
+                {
+                  !isFileLoading 
+                  ? <>
+                      <Eye/>
+                    </>
+                  : <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                }
+                <div>Lihat Modul</div>
+              </Button>
           }
+          {
+            filePDF
+              &&  <PDFReader filePDF={filePDF}/>
+          }
+          
         </TabsContent>
         <TabsContent value="quiz">
           <div className="border lg:px-10">
