@@ -78,33 +78,33 @@ export default function UpdateMateri({params}: {params: Props}){
         <>
         <div className="flex justify-between mb-4">
             <h1 className="text-2xl font-bold">Update Chapter</h1>
-           
+    
             <AlertDialog>
-            <AlertDialogTrigger asChild>
-                <Button
-                size={'sm'} 
-                variant={'destructive'}>
-                    <Trash className="mr-2 w-4 h-4"/>
-                    Delete This Chapter
-                </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete this chapter and remove your data from our servers.
-                </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                className="text-red-700"
-                onClick={deleteChapter} 
-                >
-                    Continue Delete 
-                </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
+                <AlertDialogTrigger asChild>
+                    <Button
+                    size={'sm'} 
+                    variant={'destructive'}>
+                        <Trash className="mr-2 w-4 h-4"/>
+                        Delete This Chapter
+                    </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete this chapter and remove your data from our servers.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                    className="text-red-700"
+                    onClick={deleteChapter} 
+                    >
+                        Continue Delete 
+                    </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
             </AlertDialog>
         </div>
         {

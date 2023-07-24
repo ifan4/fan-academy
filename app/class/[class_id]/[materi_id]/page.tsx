@@ -12,9 +12,7 @@ import { Eye, Loader2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import PDFReader from "./pdfReader/pdfReader";
-
-
-
+import { useToast } from "@/components/ui/use-toast";
 
 interface Props{
   class_id: string;
@@ -23,6 +21,7 @@ interface Props{
 export default function ClassDetail({ params }: { params: Props }) {
   const { class_id, materi_id } = params  
   const {data:session} = useSession() 
+  const { toast } = useToast()
   
   const [isFileLoading, setIsFileLoading] = useState<boolean>(false)
 
@@ -35,6 +34,20 @@ export default function ClassDetail({ params }: { params: Props }) {
 
   const onDownload = async()=>{
     setIsFileLoading(true)
+    //@ts-ignore
+    if(!session?.user?.accessToken){
+      setIsFileLoading(false);
+      return toast({
+        title: 'Please Login First',
+        description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+                <p className="text-white">
+                  Please <Link href={'/auth/login'}><Button>Login</Button> </Link> to Access Modul!
+                </p>
+            </pre>
+        )
+    })
+    }
     try {
       // @ts-ignore
       const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/materi/download/${dataMateri?.data?.file_materi}`,{
