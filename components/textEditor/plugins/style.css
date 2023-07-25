@@ -1,13 +1,4 @@
-body {
-    margin: 0;
-    background: #eee;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular",
-      sans-serif;
-    font-weight: 500;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
+
   .other h2 {
     font-size: 18px;
     color: #444;
@@ -31,10 +22,6 @@ body {
     text-align: center;
   }
   
-  h1 {
-    font-size: 24px;
-    color: #333;
-  }
   
   .ltr {
     text-align: left;
@@ -47,7 +34,7 @@ body {
   .editor-container {
     margin: 20px auto 20px auto;
     border-radius: 2px;
-    max-width: 600px;
+    width: 100%;
     color: #000;
     position: relative;
     line-height: 20px;
@@ -520,9 +507,9 @@ body {
   }
   
   .dropdown {
-    z-index: 5;
+    /* z-index: 5; */
     display: block;
-    position: absolute;
+    position:fixed;
     box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1),
       inset 0 0 0 1px rgba(255, 255, 255, 0.5);
     border-radius: 8px;

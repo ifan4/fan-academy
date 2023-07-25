@@ -28,7 +28,6 @@
     "@radix-ui/react-toast": "^1.1.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@tanstack/react-table": "^8.9.2",
-    "@types/node": "20.2.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
@@ -58,6 +57,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/node": "^20.4.4",
     "copy-webpack-plugin": "^11.0.0",
     "raw-loader": "^4.0.2"
   }

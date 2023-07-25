@@ -1,4 +1,4 @@
-
+'use client'
 
 import EditorTheme from './plugins/theme'
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
@@ -23,105 +23,109 @@ import ListMaxIndentLevelPlugin from "./plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin.js";
 import AutoLinkPlugin from "./plugins/AutoLinkPlugin";
 import "./plugins/style.css";
-import { useEffect, useState } from 'react';
-import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
-import {$generateHtmlFromNodes} from '@lexical/html';
+import { FormEvent, useEffect, useState } from 'react';
+// import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
+import {$generateHtmlFromNodes,$generateNodesFromDOM} from '@lexical/html';
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import { $getRoot, LexicalEditor, $getSelection } from 'lexical';
+import { $getRoot, LexicalEditor, $getSelection, $setSelection, $insertNodes, RangeSelection, $createParagraphNode } from 'lexical';
+import OnChangePlugin from './plugins/onChangePlugin';
 
 
-function Placeholder() {
-  return <div className="editor-placeholder">Enter some rich text...</div>;
-}
 
-const editorConfig:any = {
-  // The editor theme
-  theme: EditorTheme,
-  // Handling of errors during update
-  onError(error:Error) {
-    throw error;
-  },
-  // Any custom nodes go here
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode
-  ]
-};
+function MyCustomAutoFocusPlugin({value}:{value:string}) {
+    const [editor] = useLexicalComposerContext();
+    const [isFirstRender, setIsFirstRender] = useState<boolean>(true)
 
-function ButtonHTML(placeholder: any) {
-    const [editor] = useLexicalComposerContext()
-    const [HTMLString, setHTMLString] = useState<string|TrustedHTML>('')
     useEffect(() => {
-        const removeUpdateListener = editor.registerUpdateListener(
-          ({ editorState }) => {
-            editorState.read(() => {
-              const htmlString = $generateHtmlFromNodes(editor, null);
-    
-              console.log('htmlString', htmlString);
-              setHTMLString(htmlString)
-            });
-          }
-        );
-        return () => {
-          removeUpdateListener();
-        };
-      }, [editor]);
-    return(
-        <div>
-            <button
-            onClick={()=> {
+        if (isFirstRender && value){
+            setIsFirstRender(false)
 
-                // setHTMLString(htmlString);
-            }}
-            >Lihat HTML</button>
-            <div dangerouslySetInnerHTML={{__html: HTMLString}}>
-               
-            </div>
-        </div>
-    )
+            editor.update(() => {
+                // In the browser you can use the native DOMParser API to parse the HTML string.
+                const parser = new DOMParser();
+                const dom = parser.parseFromString(value, 'text/html');
+
+                // Once you have the DOM instance it's easy to generate LexicalNodes.
+                const nodes = $generateNodesFromDOM(editor, dom);
+
+                // Select the root
+                $getRoot().select();
+
+                // Insert them at a selection.
+                $insertNodes(nodes);
+           })
+        }
+        
+    }, [editor,value,isFirstRender]);
+
+    return null;
 }
 
-export default function Editor() {
-    const [HTMLString, setHTMLString] = useState<string|TrustedHTML>('')
+type EditorProps =  {
+    placeholder?: string,
+    onChange: (...event: any[])=> void,
+    value?: string | number | null |any,
+}
+
+export default function Editor({
+    placeholder = '',
+    onChange,
+    value,
+  }: EditorProps) {
+    const editorConfig:any = {
+        // The editor theme
+        theme: EditorTheme,
+        // Handling of errors during update
+        onError(error:Error) {
+            throw error;
+        },
+        // Any custom nodes go here
+        nodes: [
+            HeadingNode,
+            ListNode,
+            ListItemNode,
+            QuoteNode,
+            CodeNode,
+            CodeHighlightNode,
+            TableNode,
+            TableCellNode,
+            TableRowNode,
+            AutoLinkNode,
+            LinkNode
+        ],
+    };
+    
+
+    function Placeholder() {
+        return <div className="editor-placeholder">{placeholder}</div>;
+      }
+    
     return (
         <LexicalComposer initialConfig={editorConfig}>
         <div className="editor-container">
             <ToolbarPlugin />
             <div className="editor-inner">
             <RichTextPlugin
-                
                 contentEditable={<ContentEditable className="editor-input" />}
                 placeholder={<Placeholder />}
                 ErrorBoundary={LexicalErrorBoundary}
             />
-            <HistoryPlugin />
-            <TreeViewPlugin />
+            {/* <HistoryPlugin />
+            <TreeViewPlugin /> */}
             <AutoFocusPlugin />
+            <MyCustomAutoFocusPlugin value={value}/>
             <CodeHighlightPlugin />
             <ListPlugin />
             <LinkPlugin />
             <AutoLinkPlugin />
             <ListMaxIndentLevelPlugin maxDepth={7} />
             <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+            <OnChangePlugin onChange={onChange}/>
             </div>
         </div>
-        <div>
-            {/* {editor._htmlConversions} */}
-        </div>
-        <ButtonHTML/>
+
         </LexicalComposer>
     );
 }
-function $generateNodesFromDOM(editor: LexicalEditor, text: Document) {
-    throw new Error('Function not implemented.');
-}
+
 
