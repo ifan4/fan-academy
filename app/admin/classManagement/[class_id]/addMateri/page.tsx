@@ -25,6 +25,8 @@ import {
 import { quiz } from "@/types/interfaces";
 import { isBreakOrContinueStatement } from "typescript";
 import { useRouter } from "next/navigation";
+import Editor from "@/components/textEditor";
+import { $getRoot } from 'lexical';
 
 interface Props{
     class_id: string;
@@ -97,6 +99,10 @@ export default function MateriForm({params}: {params: Props}){
         name: "quizzes",
         control: form.control,
     })
+
+    console.log('fields');
+    console.log(fields);
+    
 
 
 
@@ -284,15 +290,15 @@ export default function MateriForm({params}: {params: Props}){
                                     control={form.control}
                                     name={`quizzes.${index}.question`}
                                     render={({field}) => (
-                                        <FormItem>
-                                            <FormControl>
-                                            <Textarea 
-                                            className=""
-                                            placeholder="Input question here" {...field} 
-                                            />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
+                                        <Editor 
+                                        placeholder="Input question here"
+                                        onChange={value => {
+                                            console.log('masuk onchange rich editor',value);
+                                            
+                                            field.onChange(value.content)
+                                        }}
+                                        value={field.value}
+                                        />
                                     )}
                                     />
                                     <ol className="list-[square] space-y-3 mt-2" type="A">

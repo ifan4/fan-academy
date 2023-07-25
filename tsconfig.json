@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/storage-persist.tsx", "globalState/store.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/storage-persist.tsx", "globalState/store.tsx", "components/textEditor/plugins/AutoLinkPlugin.js"],
   "exclude": ["node_modules"]
 }

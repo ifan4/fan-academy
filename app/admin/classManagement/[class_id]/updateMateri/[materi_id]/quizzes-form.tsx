@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { quiz } from "@/types/interfaces";
 import { useRouter } from "next/navigation";
+import Editor from "@/components/textEditor";
 
 interface Props{
     class_id: string;
@@ -237,12 +238,14 @@ export default function QuizzesForm(
                                     render={({field}) => (
                                         <FormItem>
                                             <FormControl>
-                                            <Textarea 
-                                            className=""
-                                            placeholder="Input question here" {...field} 
-                                            />
+                                                <Editor 
+                                                placeholder="Input question here"
+                                                onChange={(value:any) => {
+                                                    field.onChange(value.content)
+                                                }}
+                                                value={field.value}
+                                                />  
                                             </FormControl>
-                                            <FormMessage />
                                         </FormItem>
                                     )}
                                     />

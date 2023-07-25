@@ -22,7 +22,7 @@ import CardResult from "./cardResult";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
-
+import '@/components/textEditor/plugins/style.css'
 
 const answerSchema = z.object({
     quiz_id: z.string(),
@@ -140,7 +140,7 @@ useState<boolean>(true)
             return toast({
                 title: "You submitted the following values:",
                 description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <pre className="mt-2 w-[340px] rounded-md bg-teal-700 p-4">
                     <p className="text-white">Quizzes Successfully Submitted!</p>
                 </pre>
                 ),
@@ -170,7 +170,7 @@ useState<boolean>(true)
                     quizzes && !isThereUserScores && 
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 py-2">
-                        <ol className="px-8 list-decimal [&>li]:mt-2 font-bold">
+                        <ol className="px-8 list-decimal [&>li]:mt-2">
                         {
                             fields.map((fieldx,index)=>(
                                 <FormField
@@ -181,7 +181,11 @@ useState<boolean>(true)
                                 render={({ field }) => (
                                     <li>
                                     <FormItem className="space-y-3 mb-8">
-                                    <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{fieldx.data.question}</FormLabel>
+                                    <div 
+                                    className=" bg-white text-black rounded-md p-3"
+                                    dangerouslySetInnerHTML={{__html: fieldx.data.question}}>
+                                    </div>      
+                                    {/* <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{}</FormLabel> */}
                                     <FormControl>
                                         <RadioGroup
                                         onValueChange={field.onChange}
