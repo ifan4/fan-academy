@@ -77,7 +77,7 @@ export default function ClassDetail({ params }: { params: Props }) {
 
   if (isLoadingMateri) <Loading/>
   // if (error || errMateri) throw new Error(error || errMateri); 
-  const Tabs_materi = ({id,description,title,file,video_materi,created_at}:materi) => {
+  const Tabs_materi = ({id,description,title,video_materi}:materi) => {
     return (
       <Tabs defaultValue="materi" className="">
         <TabsList className="grid grid-cols-2">

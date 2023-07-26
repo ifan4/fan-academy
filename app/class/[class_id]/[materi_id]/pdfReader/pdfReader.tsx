@@ -43,19 +43,19 @@ export default function PDFReader({filePDF}: {filePDF: any}) {
                 </Document>
 
                 </div>
-                <div className="flex justify-center items-center">
-                <Button 
-                disabled={pageNumber !== 1 ? false : true}
-                onClick={()=>setPageNumber( pageNumber - 1)}>
-                    {" < "}
-                </Button>
-                <span className="mx-2 text-white">Page {pageNumber} of {numPages}</span>
-                <Button
-                disabled={pageNumber !== numPages ? false : true}
-                onClick={()=>setPageNumber(pageNumber + 1)}
-                >
-                    {" > "}
-                </Button>
+                <div className="flex justify-center items-center relative z-50">
+                    <Button 
+                    disabled={pageNumber !== 1 ? false : true}
+                    onClick={()=>setPageNumber( pageNumber - 1)}>
+                        {" < "}
+                    </Button>
+                    <span className="mx-2 text-white">Page {pageNumber} of {numPages}</span>
+                    <Button
+                    disabled={pageNumber !== numPages ? false : true}
+                    onClick={()=>setPageNumber(pageNumber + 1)}
+                    >
+                        {" > "}
+                    </Button>
                 </div>
             </div>
         </div>
