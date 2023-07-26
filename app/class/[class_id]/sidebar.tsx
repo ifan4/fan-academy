@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { materi } from "@/types/interfaces";
 import { usePathname, useRouter } from "next/navigation";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { PanelLeftOpen } from "lucide-react";
 import { textTrunc } from "@/lib/helper";
 
@@ -14,7 +14,7 @@ import { textTrunc } from "@/lib/helper";
 export default function Sidebar({materis}:{materis:materi[]}) {
     const router = useRouter()
     const pathname = usePathname()
-    
+
 
     return(
         <>
@@ -37,7 +37,7 @@ export default function Sidebar({materis}:{materis:materi[]}) {
                         }
                         <Separator className="my-2" />
                     </Fragment>
-                    {materis?.map((materi:materi) => (
+                    {materis?.sort(function(a:any, b:any){return a.id - b.id}).map((materi:materi) => (
                     <Fragment key={materi.id}>
                         <Button 
                         className={cn(

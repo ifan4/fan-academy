@@ -167,7 +167,8 @@ useState<boolean>(true)
                 />
             }
                 {
-                    quizzes && !isThereUserScores && 
+                    quizzes?.data.length > 0 && !isThereUserScores 
+                    ?
                     <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 py-2">
                         <ol className="px-8 list-decimal [&>li]:mt-2">
@@ -227,6 +228,12 @@ useState<boolean>(true)
                         </Button>
                     </form>
                 </Form>
+                :
+                <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
+                    <h1 className="text-3xl">
+                        There are no quizzes available on this chapter right now. However, we have plenty of quizzes in other chapters waiting for you! To challenge yourself and test your knowledge, please access to another chapter.
+                    </h1>
+                </div>
                 }    
         </>
     )

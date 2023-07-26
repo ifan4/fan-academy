@@ -40,7 +40,7 @@ export default function ClassDetail({ params }: { params: Props }) {
       return toast({
         title: 'Please Login First',
         description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-red-700 p-4">
+            <pre className="mt-2 w-[340px] rounded-md bg-cyan-600 p-4">
                 <p className="text-white">
                   Please <Link href={'/auth/login'}><Button>Login</Button> </Link> to Access Modul!
                 </p>
