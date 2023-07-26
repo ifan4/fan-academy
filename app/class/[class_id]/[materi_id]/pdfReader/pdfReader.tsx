@@ -25,7 +25,7 @@ export default function PDFReader({filePDF}: {filePDF: any}) {
 
     return(
         <div>
-            <div className="container bg-gradient-to-r from-cyan-500 to-emerald-950">
+            <div className="relative overflow-hidden container bg-gradient-to-r from-cyan-500 to-emerald-950">
                 <h1 className="text-white scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 py-4">
                     MODUL
                 </h1>
