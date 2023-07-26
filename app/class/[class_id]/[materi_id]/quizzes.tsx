@@ -183,7 +183,7 @@ useState<boolean>(true)
                                     <li>
                                     <FormItem className="space-y-3 mb-8">
                                     <div 
-                                    className=" bg-white text-black rounded-md p-3"
+                                    className=" bg-white text-black rounded-md p-3 overflow-x-scroll lg:overflow-x-auto"
                                     dangerouslySetInnerHTML={{__html: fieldx.data.question}}>
                                     </div>      
                                     {/* <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{}</FormLabel> */}
@@ -229,16 +229,18 @@ useState<boolean>(true)
                     </form>
                 </Form>
                 :
-                <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
-                    <div>
-                        <h1 className="text-3xl">
-                            There are no quizzes available on this chapter right now.
-                        </h1>
-                        <p>
-                            However, we have plenty of quizzes in other chapters waiting for you! To challenge yourself and test your knowledge, please access to another chapter.
-                        </p>
+                    !isThereUserScores && 
+                
+                    <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
+                        <div>
+                            <h1 className="text-3xl">
+                                There are no quizzes available on this chapter right now.
+                            </h1>
+                            <p>
+                                However, we have plenty of quizzes in other chapters waiting for you! To challenge yourself and test your knowledge, please access to another chapter.
+                            </p>
+                        </div>
                     </div>
-                </div>
                 }    
         </>
     )
