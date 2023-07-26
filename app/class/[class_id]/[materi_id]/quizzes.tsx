@@ -230,9 +230,14 @@ useState<boolean>(true)
                 </Form>
                 :
                 <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
-                    <h1 className="text-3xl">
-                        There are no quizzes available on this chapter right now. However, we have plenty of quizzes in other chapters waiting for you! To challenge yourself and test your knowledge, please access to another chapter.
-                    </h1>
+                    <div>
+                        <h1 className="text-3xl">
+                            There are no quizzes available on this chapter right now.
+                        </h1>
+                        <p>
+                            However, we have plenty of quizzes in other chapters waiting for you! To challenge yourself and test your knowledge, please access to another chapter.
+                        </p>
+                    </div>
                 </div>
                 }    
         </>
