@@ -7,7 +7,6 @@ const initialState:theme = {
     name: 'dark'
 }
 
-
 const themeSlice = createSlice({
     name: 'theme',
     initialState,
@@ -20,7 +19,6 @@ const themeSlice = createSlice({
         }
     }
 })
-
 
 
 

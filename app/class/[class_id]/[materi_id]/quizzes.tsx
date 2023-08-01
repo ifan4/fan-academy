@@ -170,7 +170,7 @@ useState<boolean>(true)
                     quizzes?.data.length > 0 && !isThereUserScores 
                     ?
                     <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 py-2">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pb-7">
                         <ol className="px-8 list-decimal [&>li]:mt-2">
                         {
                             fields.map((fieldx,index)=>(

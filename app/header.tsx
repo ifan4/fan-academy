@@ -134,7 +134,7 @@ export default function Header() {
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
-                    <NavigationMenuItem>
+                    {/* <NavigationMenuItem>
                         <NavigationMenuTrigger>Category</NavigationMenuTrigger>
                             <NavigationMenuContent>
                                 <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -149,7 +149,7 @@ export default function Header() {
                                 ))}
                                 </ul>
                             </NavigationMenuContent>
-                        </NavigationMenuItem>
+                        </NavigationMenuItem> */}
                         <NavigationMenuItem>
                             <Link href="/aboutUs" legacyBehavior passHref>
                                 <NavigationMenuLink 

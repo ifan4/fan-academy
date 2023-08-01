@@ -28,7 +28,7 @@ const persistConfig = {
  const rootReducer = combineReducers({
     theme: themeReducer,
  });
- 
+
  const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
@@ -45,6 +45,7 @@ export const store = configureStore({
 //     localStorage.setItem('theme', store.getState().theme.name)
     
 // })
+
 
 
 export type RootState = ReturnType<typeof store.getState>;
