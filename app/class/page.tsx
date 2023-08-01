@@ -40,16 +40,6 @@ export default function ClassPage() {
                         />
                     ))
                 }
-
-                {
-                    data &&
-                    <>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'frontend'}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'backend'}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'frontend'}/>
-                        <CardComponent title='lorem ipsum dolor' buttonDisable={true} desc={'lorem ipsum dolor sit amet conspectum'} id={''} category={'programming fundamental'}/>
-                    </>
-                }
                 
                 
                 
