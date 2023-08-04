@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export const convertDate = (dateInit: string)=>{
-	if (dateInit.includes('T')){
+	if (dateInit.toString().includes('T')){
 		const newDate = new Date(dateInit);
 		const month = newDate.toLocaleString("default", { month: "long" });
 		const day = newDate.toLocaleString("default", { day: "numeric" });
@@ -15,7 +15,7 @@ export const convertDate = (dateInit: string)=>{
 	return ''
 }
 export const convertDateWithoutTime = (dateInit: string)=>{
-	if (dateInit.includes('T')){
+	if (dateInit.toString().includes('T')){
 		const newDate = new Date(dateInit);
 		const month = newDate.toLocaleString("default", { month: "long" });
 		const day = newDate.toLocaleString("default", { day: "numeric" });
@@ -31,7 +31,7 @@ export const convertDateWithoutTime = (dateInit: string)=>{
 export const textTrunc = (text:string,length:number)=>{
 	let tempText:string
         if (text.length > length){
-            tempText = text.substring(0,length) + '...'
+            tempText = text.toString().substring(0,length) + '...'
             return tempText
         }
         return text
