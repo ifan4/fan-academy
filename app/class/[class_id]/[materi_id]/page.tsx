@@ -30,8 +30,8 @@ export default function ClassDetail({ params }: { params: Props }) {
   const {data:dataMateri, error:errMateri, isLoading:isLoadingMateri} = useSWR(`/materi/${materi_id}`,fetcher)
   
   const [filePDF, setFilePDF] = useState<any>(null);
-
-
+  const [sisaPercobaan, setSisaPercobaan] = useState(3) 
+  
   const onDownload = async()=>{
     setIsFileLoading(true)
     //@ts-ignore
@@ -117,7 +117,7 @@ export default function ClassDetail({ params }: { params: Props }) {
           <div className="border lg:px-10">
               {
                 session 
-                ? <Quizzes materi_id={id}/>
+                ? <Quizzes materi_id={id} sisaPercobaan={sisaPercobaan} setSisaPercobaan={setSisaPercobaan}/>
                 : <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
                   <h1 className="text-3xl">You have to <Link className="underline underline-offset-8 hover:text-teal-500" href={'/auth/login'}>login</Link> to access quiz</h1>
                 </div>

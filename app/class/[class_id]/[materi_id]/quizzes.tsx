@@ -36,14 +36,15 @@ const answersFormSchema = z.object({
 type AnswersFormValues = z.infer<typeof answersFormSchema>
 
 
-export default function Quizzes({materi_id}:{materi_id:string}) {
+export default function Quizzes({materi_id,sisaPercobaan,setSisaPercobaan}:{materi_id:string,sisaPercobaan: number,setSisaPercobaan:any}) {
 
     const {data:session} = useSession()
     const { toast } = useToast()
     const [isThereUserScores, setIsThereUserScores] = useState<boolean>(false)
 useState<boolean>(true)
     const [isLoadingSubmit, setIsLoadingSubmit] = useState<boolean>(false) 
-    const [isLoadingTryAgain, setIsLoadingTryAgain] = useState<boolean>(false) 
+    const [isLoadingTryAgain, setIsLoadingTryAgain] = useState<boolean>(false)
+    
 
     const {data:quizzes,error,isLoading} = useSWR(
         // @ts-ignore
@@ -124,7 +125,7 @@ useState<boolean>(true)
                 }
             })
             console.log(res);
-            
+            setSisaPercobaan(sisaPercobaan - 1)
             mutate()
         } catch (error) {
             console.log(error);
@@ -181,6 +182,7 @@ useState<boolean>(true)
             {
                 isThereUserScores &&
                 <CardResult 
+                sisaPercobaan={sisaPercobaan}
                 userScores={userScores} 
                 onTryAgain={onTryAgain}
                 isLoading={isLoadingTryAgain}

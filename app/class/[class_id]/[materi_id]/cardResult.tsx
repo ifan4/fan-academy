@@ -5,16 +5,20 @@ import { userScores } from "@/types/interfaces";
 import { BellRing, Loader2 } from "lucide-react";
 import router from "next/router";
 import { title } from "process";
+import { useState } from "react";
 
 interface Props{
     userScores: userScores;
     onTryAgain: ()=>void,
-    isLoading: boolean
+    isLoading: boolean,
+    sisaPercobaan: number
 }
 
 
-export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
-    
+export default function CardResult({userScores,onTryAgain,isLoading, sisaPercobaan}: Props) {
+
+
+
     return(
         <Card className="text-center my-2 lg:my-5">
             <CardHeader>
@@ -59,8 +63,10 @@ export default function CardResult({userScores,onTryAgain,isLoading}: Props) {
                     </div>
                 </CardContent>
             </div>
-            <CardFooter className="flex justify-center">
+            <CardFooter className="flex justify-between">
+                <div>Sisa Percobaan: {sisaPercobaan}</div>
                 <Button
+                disabled={sisaPercobaan === 0}
                 onClick={onTryAgain}
                 >
                     {
