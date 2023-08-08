@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { useRouter } from "next/navigation"
+import { textTrunc } from "@/lib/helper"
 
 interface Props {
     id:string;
@@ -39,7 +40,7 @@ export default function CardComponent({title,desc,category,buttonDisable=false,i
             <CardContent className="mt-4 space-y-1">
                 <CardTitle>{title}</CardTitle>
                 <div className="text-sm text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-600 inline-block">{category}</div >
-                <CardDescription>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem!</CardDescription>    
+                <CardDescription>{textTrunc(desc,100)}</CardDescription>    
             </CardContent>
             <CardFooter>
                 <Button 
