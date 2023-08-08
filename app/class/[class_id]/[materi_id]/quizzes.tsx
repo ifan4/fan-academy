@@ -64,6 +64,21 @@ useState<boolean>(true)
         {suspense:true}
     )
 
+    
+    const {
+        data:userAnswers, 
+        isLoading:userAnswersLoading, 
+        error:userAnswersError,
+    } = useSWR(
+         // @ts-ignore
+        [`/quizScores?materi_id=${materi_id}&user_id=${session?.user?.id}`,session?.user?.accessToken], 
+        ([url,accessToken])=> fetcherWithToken(url,accessToken),
+        {suspense:true}
+    )
+    console.log('userAnswers');
+    console.log(userAnswers);
+    
+
     useEffect(()=>{
         if ( userScores?.data.length !== 0){
             return setIsThereUserScores(true)
@@ -229,7 +244,7 @@ useState<boolean>(true)
                     </form>
                 </Form>
                 :
-                    !isThereUserScores && 
+                    !isThereUserScores ? 
                 
                     <div className="flex h-[300px] text-center lg:h-[400px] justify-center items-center p-3">
                         <div>
@@ -241,6 +256,50 @@ useState<boolean>(true)
                             </p>
                         </div>
                     </div>
+
+                    :
+                        <ol className={`px-8 list-decimal [&>li]:mt-2`}>
+                        {
+                            userAnswers?.data.map((data:any,key:number)=>(
+                                    <li key={key} className={`${data.score==="0" && "p-2 bg-red-300 rounded-md"}`}>
+
+                                    <div 
+                                    className={`bg-white text-black rounded-md p-3 overflow-x-scroll lg:overflow-x-auto`}
+                                    dangerouslySetInnerHTML={{__html: data?.quiz.question}}>
+                                    </div>      
+                                    {/* <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{}</FormLabel> */}
+
+                                        <RadioGroup
+                                        disabled
+                                        defaultValue={data?.answer}
+                                        className="flex flex-col space-y-1 py-2"
+                                        >
+                                            <OptionItem_userAnswers optionText={data?.quiz?.opsi_a}/>
+                                            <OptionItem_userAnswers optionText={data?.quiz?.opsi_b}/>
+                                            {
+                                                data?.quiz?.opsi_c &&
+                                                <OptionItem_userAnswers optionText={data?.quiz?.opsi_c}/>
+                                            }
+                                            {
+                                                data?.quiz?.opsi_d &&
+                                                <OptionItem_userAnswers optionText={data?.quiz?.opsi_d}/>
+                                            }
+                                            {
+                                                data?.quiz?.opsi_e &&
+                                                <OptionItem_userAnswers optionText={data?.quiz?.opsi_e}/>
+                                            }
+                                            
+                                        </RadioGroup>
+                                        {
+                                            data.score === "0" &&
+                                            <p className="text-red-800 text-2xl text-center">Wrong Answer</p>
+                                        }
+
+                                    </li>
+                                ))
+                            }
+                            
+                        </ol>
                 }    
         </>
     )
@@ -256,5 +315,17 @@ const OptionItem = ({optionText}:{optionText:string})=>{
                 {optionText}
             </FormLabel>
         </FormItem>
+    )
+} 
+const OptionItem_userAnswers = ({optionText}:{optionText:string})=>{
+    return(
+        <div className="flex items-center space-x-3 space-y-0">
+
+            <RadioGroupItem value={optionText}/>
+    
+            <label className="font-normal text-sm lg:text-xl rounded-lg p-4 dark:bg-slate-900 bg-white ring-1 ring-slate-900/5 shadow-lg hover:bg-sky-500 hover:ring-sky-500 w-full">
+                {optionText}
+            </label>
+        </div>
     )
 } 

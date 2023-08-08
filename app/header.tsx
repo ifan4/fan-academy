@@ -21,7 +21,8 @@ import {
     User,
     Moon,
     Sun,
-    UserCircle2
+    UserCircle2,
+    ExternalLink
   } from "lucide-react"
   import { Icons } from "@/components/icons"
   import { useDispatch } from "react-redux";
@@ -161,6 +162,28 @@ export default function Header() {
                                     About Us
                                 </NavigationMenuLink>
                             </Link>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <Link href="/faq" legacyBehavior passHref>
+                                <NavigationMenuLink 
+                                className={`
+                                ${navigationMenuTriggerStyle()}
+                                ${pathname?.startsWith('/faq') && 'bg-teal-600 dark:bg-accent text-white dark:text-accent-foreground'}
+                            `   }
+                                >
+                                    <i>FAQ</i>
+                                </NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
+                        <NavigationMenuItem>
+                            <a href="https://www.programiz.com/html/online-compiler" target="_blank">
+                                <NavigationMenuLink 
+                                className={navigationMenuTriggerStyle()}
+                                >
+                                    Online Compiler
+                                    <ExternalLink className="ms-1 w-5 h-5"/>
+                                </NavigationMenuLink>
+                            </a>
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
