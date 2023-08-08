@@ -70,8 +70,13 @@ useState<boolean>(true)
         isLoading:userAnswersLoading, 
         error:userAnswersError,
     } = useSWR(
+        isThereUserScores 
+        ?
          // @ts-ignore
-        [`/quizScores?materi_id=${materi_id}&user_id=${session?.user?.id}`,session?.user?.accessToken], 
+        [`/quizScores?materi_id=${materi_id}&user_id=${session?.user?.id}`,session?.user?.accessToken]
+        :
+        null
+        , 
         ([url,accessToken])=> fetcherWithToken(url,accessToken),
         {suspense:true}
     )
@@ -261,14 +266,12 @@ useState<boolean>(true)
                         <ol className={`px-8 list-decimal [&>li]:mt-2`}>
                         {
                             userAnswers?.data.map((data:any,key:number)=>(
-                                    <li key={key} className={`${data.score==="0" && "p-2 bg-red-300 rounded-md"}`}>
+                                    <li key={key} className={`p-2 ${data.score==="0" ? "bg-red-300 rounded-md" : "bg-emerald-300 rounded-md"}`}>
 
                                     <div 
                                     className={`bg-white text-black rounded-md p-3 overflow-x-scroll lg:overflow-x-auto`}
                                     dangerouslySetInnerHTML={{__html: data?.quiz.question}}>
                                     </div>      
-                                    {/* <FormLabel className="scroll-m-20 text-xl lg:text-2xl font-semibold tracking-tight">{}</FormLabel> */}
-
                                         <RadioGroup
                                         disabled
                                         defaultValue={data?.answer}
@@ -291,8 +294,9 @@ useState<boolean>(true)
                                             
                                         </RadioGroup>
                                         {
-                                            data.score === "0" &&
-                                            <p className="text-red-800 text-2xl text-center">Wrong Answer</p>
+                                            data.score === "0" 
+                                            ? <p className="text-red-800 text-2xl text-center">Wrong Answer</p>
+                                            : <p className="text-emerald-950 text-2xl text-center">Correct Answer</p>
                                         }
 
                                     </li>
